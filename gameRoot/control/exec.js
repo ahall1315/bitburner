@@ -15,7 +15,7 @@ export async function main(ns) {
 		ns.tprint("Incorrect usage of arguments. Provide filename of script and number of threads \nUsage: run exec.js [filename] [threads]");
 	} else {
 		for (var i = 0; i < servers.length; ++i) {
-			pid = ns.exec(`/scripts/${script}`, hostPrefix + i, threads);
+			pid = ns.exec(`${script}`, hostPrefix + i, threads);
 			if (pid === 0) {
 				error = true;
 			}
