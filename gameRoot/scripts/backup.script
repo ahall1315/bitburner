@@ -1,0 +1,13 @@
+// Backup home scripts to Backup directory
+hostname = getHostname()
+sourceDirectory = args[0];
+target = "/Backup";
+
+if (sourceDirectory == undefined) {
+  tprint("Incorrect usage of backup script. Usage: backup [source directory]");
+} else {
+  files = ls(hostname, sourceDirectory);
+  files.forEach(function (file, index) {
+    scp(file, target);
+  })
+}

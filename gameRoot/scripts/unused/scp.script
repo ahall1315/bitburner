@@ -1,0 +1,20 @@
+// Moves all script files in a source directory to a server
+hostname = getHostname()
+sourceDirectory = args[0];
+target = args[1];
+copied = false;
+
+if (sourceDirectory == undefined || target == undefined) {
+  tprint("Incorrect usage of copy script. Usage: copy [source directory] [destination hostname]");
+} else {
+  files = ls(hostname, sourceDirectory);
+  files.forEach(function (file, index) {
+    copied = scp(file, target);
+    if (copied) {
+      print("Successfully copied " + file + "to " + target);
+    } else {
+      print("Failed to copy " + file + "to " + target + ". Is there enough RAM?");
+    }
+  })
+  return copied;
+}

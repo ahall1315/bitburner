@@ -1,0 +1,49 @@
+NOTE: These are only the servers with a depth of 10 from home
+
+// Above 800 hacking skill (2748 threads each)
+omnia
+zeus-med
+taiyang-digital
+zb-def
+univ-energy
+nova-med
+defcomm
+unitalife
+aerocorp
+infocomm
+icarus
+deltaone
+galactic-cyber
+global-pharm
+
+// Between 100 and 800 hacking skill (583 threads each)
+computek
+snap-fitness
+solaris
+lexo-corp
+summit-uni
+the-hub
+silver-helix
+iron-gym
+johnson-ortho
+avmnite-02h
+millenium-fitness
+zb-institute
+netlink
+omega-net
+alpha-ent
+catalyst
+rho-construction
+rothman-uni
+crush-fitness
+phantasy
+
+// Between 1 and 10 hacking skill
+n00dles
+foodnstuff
+sigma-cosmetics
+joesguns
+
+// To Destroy BitNode
+backdoor on world-daemon server
+can connect to from icarus

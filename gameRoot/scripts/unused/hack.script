@@ -1,0 +1,41 @@
+var target = args[0];
+
+disableLog("ALL");
+
+if (target == undefined) {
+    tprint("Incorrect usage. Provide argument [hostname]")
+} else {
+
+    // Create number formatter.
+    var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    });
+
+    var serverMaxMoney = getServerMaxMoney(target);
+	var serverMoneyAvailable = getServerMoneyAvailable(target);
+    var serverMinSecurityLevel = getServerMinSecurityLevel(target);
+
+    print("Server Max Money: " + formatter.format(serverMaxMoney));
+
+	var moneyThresh = serverMaxMoney * 0.75; // Weight is the threshold to hack
+	var securityThresh = serverMinSecurityLevel + 5;
+
+    while (true) {
+        print("-----------------------------------------------")
+        print("             HACKING TARGET: " + target);
+        serverMoneyAvailable = getServerMoneyAvailable(target);
+        print("Available to max ratio: " + ((serverMoneyAvailable / serverMaxMoney) * 100).toFixed(2) + "%");
+        print("Threshold to hack: " + ((moneyThresh / serverMaxMoney) * 100).toFixed(2) + "%");
+        print("");
+        print("Current security level: " + getServerSecurityLevel(target).toFixed(2));
+        print("Threshold to weaken: " + securityThresh);
+        if (serverMinSecurityLevel > securityThresh) {
+            weaken(target);
+        } else if (serverMoneyAvailable < moneyThresh) {
+            grow(target);
+        } else {
+            hack(target);
+        }
+    }
+}

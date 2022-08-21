@@ -1,0 +1,7 @@
+hackList = ["n00dles", "foodnstuff", "sigma-cosmetics", "joesguns", "hong-fang-tea", "harakiri-sushi", "iron-gym"]
+
+while(true){
+hackList.forEach(function (item, index) {
+  nuke(item);
+})
+}

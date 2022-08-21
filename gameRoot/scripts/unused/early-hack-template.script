@@ -1,0 +1,21 @@
+var target = args[0];
+
+if (target == undefined) {
+    tprint("Incorrect usage. Provide argument [hostname]")
+} else {
+    var moneyThresh = getServerMaxMoney(target) * 0.75;
+    var securityThresh = getServerMinSecurityLevel(target) + 5;
+    if (fileExists("BruteSSH.exe", "home")) {
+        brutessh(target);
+    }
+    nuke(target);
+    while (true) {
+        if (getServerSecurityLevel(target) > securityThresh) {
+            weaken(target);
+        } else if (getServerMoneyAvailable(target) < moneyThresh) {
+            grow(target);
+        } else {
+            hack(target);
+        }
+    }
+}

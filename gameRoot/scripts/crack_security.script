@@ -1,0 +1,13 @@
+// Reduce security
+var target = args[0];
+
+if (target == undefined) {
+	tprint("Incorrect usage. Provide argument [hostname]")
+} else {
+	var securityThresh = getServerMinSecurityLevel(target) + 5;
+	while (true) {
+		if (getServerSecurityLevel(target) > securityThresh) {
+			weaken(target);
+		}
+	}
+}
