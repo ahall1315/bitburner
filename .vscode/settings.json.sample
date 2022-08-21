@@ -1,0 +1,7 @@
+{
+    "bitburner.authToken": "<YOUR TOKEN>",
+    "bitburner.fileWatcher.enable": true,
+    "bitburner.scriptRoot": "./gameRoot/",
+    "bitburner.showFileWatcherEnabledNotification": true,
+    "bitburner.showPushSuccessNotification": true
+}
