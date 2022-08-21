@@ -1,4 +1,4 @@
-<h1>Bitburner<h1>
+<h1>Bitburner</h1>
 
 This repository contains some of the scripts and other files I wrote for the programming-based incremental game Bitburner.
 
