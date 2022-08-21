@@ -42,52 +42,52 @@ export async function main(ns) {
 		currency: 'USD',
 	});
 
-	if (money > costBruteSSH) {
+	if (!ns.fileExists("BruteSSH.exe", "home") && money > costBruteSSH) {
 		canBuy.push("BruteSSH.exe");
 		money = money - costBruteSSH;
 		cost = cost + costBruteSSH;
 	}
-	if (money > costFTPCrack) {
+	if (!ns.fileExists("FTPCrack.exe") && money > costFTPCrack) {
 		canBuy.push("FTPCrack.exe");
 		money = money - costFTPCrack;
 		cost = cost + costFTPCrack;
 	}
-	if (money > cost_relaySMTP) {
+	if (!ns.fileExists("relaySMTP.exe") && money > cost_relaySMTP) {
 		canBuy.push("relaySMTP.exe");
 		money = money - cost_relaySMTP;
 		cost = cost + cost_relaySMTP;
 	}
-	if (money > costHTTPWorm) {
+	if (!ns.fileExists("HTTPWorm.exe") && money > costHTTPWorm) {
 		canBuy.push("HTTPWorm.exe");
 		money = money - costHTTPWorm;
 		cost = cost + costHTTPWorm;
 	}
-	if (money > costSQLInject) {
+	if (!ns.fileExists("SQLInject.exe") && money > costSQLInject) {
 		canBuy.push("SQLInject.exe");
 		money = money - costSQLInject;
 		cost = cost + costSQLInject;
 	}
-	if (money > costServerProfiler) {
+	if (!ns.fileExists("ServerProfiler.exe") && money > costServerProfiler) {
 		canBuy.push("ServerProfiler.exe");
 		money = money - costServerProfiler;
 		cost = cost + costServerProfiler;
 	}
-	if (money > costDeepScanV1) {
+	if (!ns.fileExists("DeepScanV1.exe") && money > costDeepScanV1) {
 		canBuy.push("DeepScanV1.exe");
 		money = money - costDeepScanV1;
 		cost = cost + costDeepScanV1;
 	}
-	if (money > costDeepScanV2) {
+	if (!ns.fileExists("DeepScanV2.exe") && money > costDeepScanV2) {
 		canBuy.push("DeepScanV2.exe");
 		money = money - costDeepScanV2;
 		cost = cost + costDeepScanV2;
 	}
-	if (money > costAutoLink) {
+	if (!ns.fileExists("AutoLink.exe") && money > costAutoLink) {
 		canBuy.push("AutoLink.exe");
 		money = money - costAutoLink;
 		cost = cost + costAutoLink;
 	}
-	if (money > costFormulas) {
+	if (!ns.fileExists("Formulas.exe") && money > costFormulas) {
 		canBuy.push("Formulas.exe");
 		money = money - costFormulas;
 		cost = cost + costFormulas;
