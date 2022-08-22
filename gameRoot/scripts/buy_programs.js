@@ -93,6 +93,12 @@ export async function main(ns) {
 		cost = cost + costFormulas;
 	}
 
+	// If there is nothing we can buy
+	if (canBuy.length === 0) {
+		ns.tprint("Can't buy any programs!");
+		ns.exit();
+	}
+
 	for (let i = 0; i < canBuy.length; i++) {
 		printPrograms = printPrograms.concat("- " + canBuy[i] + "\n");
 	}
