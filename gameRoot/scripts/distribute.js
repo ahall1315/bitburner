@@ -7,8 +7,16 @@ export async function main(ns) {
 	let pid = -1;
 	let error = false;
 	let count = 0;
+	let noPrintSwitch = "-n";
+	let noPrint = false;
 
-	ns.tprint("Attempting to distribute to " + servers.length + " servers...");
+	if (ns.args.includes(noPrintSwitch)) {
+		noPrint = true;
+	}
+
+	if (!noPrint) {
+		ns.tprint("Attempting to distribute to " + servers.length + " servers...");
+	}
 
 	for (let i = 0; i < servers.length; i++) {
 		ns.print(servers[i]);
@@ -26,13 +34,15 @@ export async function main(ns) {
 		}
 	}
 
-	if (error) {
-		ns.tprint("Failed to distribute to one or more servers. Is there enough RAM?");
-	} else {
-		if (servers.includes("home")) {
-			ns.tprint("Cannot distribute to home!");
+	if (!noPrint) {
+		if (error) {
+			ns.tprint("Failed to distribute to one or more servers. Is there enough RAM?");
+		} else {
+			if (servers.includes("home")) {
+				ns.tprint("Cannot distribute to home!");
+			}
 		}
+		ns.tprint("Succesfully distributed to " + count + " connected servers");
 	}
-	ns.tprint("Succesfully distributed to " + count + " connected servers");
 
 }
