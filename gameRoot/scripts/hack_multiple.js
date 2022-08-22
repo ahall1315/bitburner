@@ -29,6 +29,7 @@ export async function main(ns) {
 			// Divide the the given threads amongst the targets
 			if (ns.args.includes(divideThreadsSwitch)) {
 				threads = threads / targets.length;
+				threads = threads.toFixed(0);
 			}
 
 			for (let i = 0; i < targets.length; i++) {
