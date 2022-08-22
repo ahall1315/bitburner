@@ -11,7 +11,7 @@ export async function main(ns) {
 	
 	// If there are no arguments
 	if (ns.args.length === 0) {
-		ns.tprint("Attempting to kill all scripts on purchased servers...");
+		ns.tprint("Attempting to kill all scripts on purchased server(s)...");
 		
 		for (var i = 0; i < servers.length; ++i) {
 			killed = ns.killall(hostPrefix + i);
@@ -23,12 +23,12 @@ export async function main(ns) {
 		}
 		
 		if (error) {
-			ns.tprint("There was an error in killing the scripts on one or more purchased servers.");
+			ns.tprint("There was an error in killing the scripts on one or more purchased server(s).");
 		}
 		ns.tprint("Scripts successfully killed on " + count + " purchased server(s).");
 
 	} else {
-		ns.tprint("Attempting to kill scripts on targets...");
+		ns.tprint("Attempting to kill scripts on target(s)...");
 
 		for (i = 0; i < ns.args.length; i++) {
 			targets.push(ns.args[i]);
@@ -44,7 +44,7 @@ export async function main(ns) {
 		}
 
 		if (error) {
-			ns.tprint("There was an error in killing the scripts on one or more targets.");
+			ns.tprint("There was an error in killing the scripts on one or more target(s).");
 		}
 		ns.tprint("Scripts successfully killed on " + count + " target(s).");
 
