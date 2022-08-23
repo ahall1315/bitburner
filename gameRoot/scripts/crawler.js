@@ -8,12 +8,19 @@ export async function main(ns) {
     let pServPrefix = "golem";
     let homeSvr = "home";
     let printString = "Can hack ";
+    let noMoneySwitch = "-m";
+    // There are probably more. TODO: update this list
+    let noMoney = ["CSEC", "darkweb", "avmnite-02h", "I.I.I.I", "run4theh111lz", "."]
 
     for (let i = 0; i < hosts.length; i++) {
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
         if (hosts[i] != homeSvr && !hosts[i].includes(pServPrefix) && ns.getHackingLevel() > ns.getServerRequiredHackingLevel(hosts[i]) && getNumPortPrograms() > ns.getServerNumPortsRequired(hosts[i])) {
             canHack.push(hosts[i]);
         }
+    }
+
+    if (ns.args.includes(noMoneySwitch)) {
+        canHack = canHack.filter(host => !noMoney.includes(host));
     }
 
     printString = printString.concat(canHack.length + " servers:\n")
