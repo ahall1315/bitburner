@@ -1,0 +1,25 @@
+--Aevum--
+PCMatrix
+
+--Tian Di Hui--
+Social Negotiation Assistant (S.N.A) 
+    +15% reputation from factions and companies
+    Removes the penalty for not focusing on actions such as working in a job or working for a faction
+
+--Chongqing--
+Neurogen Gene Modification
+    +40% hacking experience
+
+--Ishima--
+INFRARET Enhancement
+    +10% dexterity skill
+    +10% crime money
+    +25% crime success rate
+
+--The Black Hand--
+The Black Hand
+    +10% hacking skill
+    +15% strength skill
+    +15% dexterity skill
+    +2% faster hack(), grow(), and weaken()
+    +10% hack() power
