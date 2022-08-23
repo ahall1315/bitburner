@@ -39,3 +39,7 @@ BitRunners Neurolink
     +5% faster hack(), grow(), and weaken()
     +10% hack() success chance
     Start with FTPCrack.exe and relaySMTP.exe after installing Augmentations.
+Cranial Signal Processors - Gen V
+    +30% hacking skill
+    +25% hack() power
+    +75% grow() power
