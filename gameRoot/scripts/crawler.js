@@ -10,7 +10,7 @@ export async function main(ns) {
     let printString = "Can hack ";
     let noMoneySwitch = "-m";
     // There are probably more. TODO: update this list
-    let noMoney = ["CSEC", "darkweb", "avmnite-02h", "I.I.I.I", "run4theh111lz", "."]
+    let noMoney = ["CSEC", "darkweb", "avmnite-02h", "I.I.I.I", "run4theh111z", "."]
 
     for (let i = 0; i < hosts.length; i++) {
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
