@@ -23,3 +23,19 @@ The Black Hand
     +15% dexterity skill
     +2% faster hack(), grow(), and weaken()
     +10% hack() power
+
+--New Tokyo--
+Nutrigen Implant
+    +20% combat experience
+
+--Bitrunners--
+Neural Accelerator
+    +10% hacking skill
+    +15% hacking experience
+    +20% hack() power
+BitRunners Neurolink
+    +15% hacking skill
+    +20% hacking exp
+    +5% faster hack(), grow(), and weaken()
+    +10% hack() success chance
+    Start with FTPCrack.exe and relaySMTP.exe after installing Augmentations.
