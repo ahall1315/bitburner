@@ -43,6 +43,7 @@ export async function main(ns) {
 			confirm = await ns.prompt(`Hacking these servers with ${threads} threads each:\n${printTargets} \nConfirm?`, { type: "boolean" });
 
 			if (confirm) {
+				ns.tprint("Attempting to hack...");
 				for (let i = 0; i < targets.length; i++) {
 					ns.run("/scripts/open_ports.js", 1, targets[i], noPrintSwitch);
 					await ns.sleep(250); // Waits for ports to be opened
