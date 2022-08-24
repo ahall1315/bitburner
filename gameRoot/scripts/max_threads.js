@@ -37,11 +37,13 @@ export async function main(ns) {
 	let freeRam = maxRam - usedRam;
 	let usedRatio = usedRam / maxRam;
 	let scriptRam = ns.getScriptRam(script, host);
-	let threads = 1;
+	let threads = 0;
 
 	// If this script is analyzing the same host it is running on
 	if (host === ns.getHostname()) {
 		usedRam = usedRam - ns.getScriptRam("/scripts/max_threads.js"); // Subtracts the RAM cost of this script
+		freeRam = maxRam - usedRam;
+		usedRatio = usedRam / maxRam;
 	}
 
 	ns.tprint("Host total RAM: " + maxRam.toLocaleString() + " GB");
@@ -51,10 +53,10 @@ export async function main(ns) {
 
 	ns.tprint("------------------------------------");
 
-	threads = maxRam / scriptRam;
-	ns.tprint("Max threads with total RAM: " + numberWithCommas(threads.toFixed(0)));
-	threads = freeRam / scriptRam;
-	ns.tprint("Max threads with free RAM: " + numberWithCommas(threads.toFixed(0)));
+	threads = Math.floor(maxRam / scriptRam);
+	ns.tprint("Max threads with total RAM: " + numberWithCommas(threads));
+	threads = Math.floor(freeRam / scriptRam);
+	ns.tprint("Max threads with free RAM: " + numberWithCommas(threads));
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
