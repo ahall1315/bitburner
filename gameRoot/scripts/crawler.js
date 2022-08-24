@@ -33,6 +33,9 @@ export async function main(ns) {
         }
     }
 
+    ns.tprint("Writing to '/serverinfo/can_hack.txt'...");
+    await ns.write("/serverinfo/can_hack.txt", canHack, "w");
+
     ns.tprint(printString);
 
     return canHack;
