@@ -37,7 +37,7 @@ export async function main(ns) {
     }
 
     function getMaxThreads(host) {
-        var maxRam = ns.getServerMaxRam(host);
+        var maxRam = ns.getServerMaxRam(host) - 32; // Leaves at least 32 GB to leave room for scripts to run
         var scriptRam = ns.getScriptRam(hackScript)
 
         return Math.floor(maxRam / scriptRam)
