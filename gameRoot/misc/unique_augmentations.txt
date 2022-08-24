@@ -43,3 +43,21 @@ Cranial Signal Processors - Gen V
     +30% hacking skill
     +25% hack() power
     +75% grow() power
+
+--The Syndicate--
+BrachiBlades
+    +15% strength skill
+    +15% defense skill
+    +15% crime money
+    +10 crime success rate
+
+--Slum Snakes--
+SmartSonar Implant
+    +10% dexterity skill
+    +15% dexterity exp
+    +25 crime money
+
+--Tetrads--
+Bionic Arms
+    +30% strength skill
+    +30% dexterity skill
