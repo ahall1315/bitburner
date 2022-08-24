@@ -61,3 +61,8 @@ SmartSonar Implant
 Bionic Arms
     +30% strength skill
     +30% dexterity skill
+
+--The Dark Army--
+Graphene Bionic Arms
+    +85% strength skill
+    +85% dexterity skill
