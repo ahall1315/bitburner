@@ -3,34 +3,38 @@
 /** @param {NS} ns */
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
-    const killScript = "/control/kill_scripts.js";
     const homeSvr = "home";
     const toHackPath = "/serverinfo/can_hack.txt";
     const noPrintSwitch = "-n";
+    const noMoneySwitch = "-m";
 
     let toHack = [];
     let pid = -1;
     let threads = 0;
     let error = false;
 
-    pid = ns.run(killScript, 1, homeSvr);
-    if (pid <= 0) {
-        error = checkError(pid);
-    }
+    ns.killall(homeSvr, true);
+    await ns.sleep(1000); // Waits for scripts to be killed
+
+    // Populate can_hack.txt
+    pid = ns.run("/scripts/crawler.js", 1, noMoneySwitch);
+    await ns.sleep(1000); // Waits for can_hack.txt to be populated
+    error = checkError();
 
     threads = getMaxThreads(homeSvr);
     ns.tprint("Total threads: " + threads);
 
     toHack = ns.read(toHackPath);
-
-    ns.tprint(toHack);
-
     toHack = toHack.split(",");
 
     threads = divideThreads(threads, toHack);
     ns.tprint("Threads per target: " + threads);
 
     await attemptHack(homeSvr, toHack, threads, noPrintSwitch);
+
+    if (error) {
+        ns.tprint("There was an error in running the script.");
+    }
 
     function getMaxThreads(host) {
         var maxRam = ns.getServerMaxRam(host);
@@ -63,9 +67,7 @@ export async function main(ns) {
             }
             pid = ns.run("/scripts/hack.js", threads, targets[i]);
 
-            if (pid <= 0) {
-                error = true;
-            }
+            error = checkError();
         }
         if (targets.length === 1) {
             ns.tprint("Hacking server...")
