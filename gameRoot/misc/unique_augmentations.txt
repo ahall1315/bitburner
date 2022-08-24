@@ -66,3 +66,14 @@ Bionic Arms
 Graphene Bionic Arms
     +85% strength skill
     +85% dexterity skill
+
+--Speakers for the Dead--
+Graphene BrachiBlades Upgrade
+    +40% strength skill
+    +40% defense skill
+    +30% crime money
+    +10% crime success rate
+
+--Daedalus--
+The Red Pill
+    It's time to leave the cave.
