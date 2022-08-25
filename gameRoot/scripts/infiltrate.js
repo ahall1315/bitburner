@@ -1,3 +1,5 @@
+// Writes info about infiltration locations to a file
+
 /** @param {NS} ns */
 export async function main(ns) {
     let locations = ns.infiltration.getPossibleLocations();
