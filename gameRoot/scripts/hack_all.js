@@ -3,7 +3,7 @@
 /** @param {NS} ns */
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
-    const homeSvr = "home";
+    const host = ns.getHostname();
     const toHackPath = "/serverinfo/can_hack.txt";
     const noPrintSwitch = "-n";
     const noMoneySwitch = "-m";
@@ -13,7 +13,7 @@ export async function main(ns) {
     let threads = 0;
     let error = false;
 
-    ns.killall(homeSvr, true);
+    ns.killall(host, true);
     await ns.sleep(1000); // Waits for scripts to be killed
 
     // Populate can_hack.txt
@@ -21,7 +21,7 @@ export async function main(ns) {
     await ns.sleep(1000); // Waits for can_hack.txt to be populated
     error = checkError();
 
-    threads = getMaxThreads(homeSvr);
+    threads = getMaxThreads(host);
     ns.tprint("Total threads: " + threads);
 
     toHack = ns.read(toHackPath);
@@ -30,7 +30,7 @@ export async function main(ns) {
     threads = divideThreads(threads, toHack);
     ns.tprint("Threads per target: " + threads);
 
-    await attemptHack(homeSvr, toHack, threads, noPrintSwitch);
+    await attemptHack(host, toHack, threads, noPrintSwitch);
 
     if (error) {
         ns.tprint("There was an error in running the script.");

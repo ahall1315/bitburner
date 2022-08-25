@@ -14,7 +14,7 @@ export async function main(ns) {
 
     for (let i = 0; i < hosts.length; i++) {
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
-        if (hosts[i] != homeSvr && !hosts[i].includes(pServPrefix) && ns.getHackingLevel() > ns.getServerRequiredHackingLevel(hosts[i]) && getNumPortPrograms() > ns.getServerNumPortsRequired(hosts[i])) {
+        if (hosts[i] != homeSvr && !hosts[i].includes(pServPrefix) && ns.getHackingLevel() > ns.getServerRequiredHackingLevel(hosts[i]) && getNumPortPrograms() >= ns.getServerNumPortsRequired(hosts[i])) {
             canHack.push(hosts[i]);
         }
     }
