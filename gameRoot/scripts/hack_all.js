@@ -72,7 +72,7 @@ export async function main(ns) {
         ns.tprint("Attempting to hack...");
 
         if (threads === 0) {
-            ns.tprint("Error: 0 threads while attempting to hack " + targets + "")
+            ns.tprint("Error: 0 threads while attempting to hack targets.")
             error = true;
             ns.exit();
         }
