@@ -1,5 +1,10 @@
 // Hacks all servers from home that you can hack with maximum threads
 
+// RUNTIME ERROR
+// /scripts/hack_all.js@home (PID - 4)
+
+// run: Invalid thread count. Must be numeric and > 0, is 0
+
 /** @param {NS} ns */
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
@@ -37,7 +42,14 @@ export async function main(ns) {
     }
 
     function getMaxThreads(host) {
-        var maxRam = ns.getServerMaxRam(host) - 32; // Leaves at least 32 GB to leave room for scripts to run
+        var serverMaxRam = ns.getServerMaxRam(host);
+        
+        if (serverMaxRam <= 32) {
+            var maxRam = ns.getServerMaxRam(host)
+        } else {
+            var maxRam = ns.getServerMaxRam(host) - 32; // Leaves at least 32 GB to leave room for scripts to run
+        }
+
         var scriptRam = ns.getScriptRam(hackScript)
 
         return Math.floor(maxRam / scriptRam)
@@ -58,22 +70,34 @@ export async function main(ns) {
 
     async function attemptHack(host, targets, threads, noPrintSwitch) {
         ns.tprint("Attempting to hack...");
-        for (let i = 0; i < targets.length; i++) {
-            ns.run("/scripts/open_ports.js", 1, targets[i], noPrintSwitch);
-            await ns.sleep(250); // Waits for ports to be opened
-            if (ns.isRunning("/scripts/hack.js", host, targets[i])) {
-                ns.print("Hack script already running for target: " + targets[i] + "! Killing script.")
-                ns.kill("/scripts/hack.js", host, targets[i])
-            }
-            pid = ns.run("/scripts/hack.js", threads, targets[i]);
 
-            error = checkError();
+        if (threads === 0) {
+            ns.tprint("Error: 0 threads while attempting to hack " + targets + "")
+            error = true;
+            ns.exit();
         }
-        if (targets.length === 1) {
-            ns.tprint("Hacking server...")
+
+        if (targets.length === 0 || targets.includes("")) {
+            error = true;
         } else {
-            ns.tprint("Hacking multiple servers...");
+            for (let i = 0; i < targets.length; i++) {
+                ns.run("/scripts/open_ports.js", 1, targets[i], noPrintSwitch);
+                await ns.sleep(250); // Waits for ports to be opened
+                if (ns.isRunning("/scripts/hack.js", host, targets[i])) {
+                    ns.print("Hack script already running for target: " + targets[i] + "! Killing script.")
+                    ns.kill("/scripts/hack.js", host, targets[i])
+                }
+                pid = ns.run("/scripts/hack.js", threads, targets[i]);
+
+                error = checkError(pid);
+            }
+            if (targets.length === 1) {
+                ns.tprint("Hacking server...")
+            } else {
+                ns.tprint("Hacking multiple servers...");
+            }
         }
+
         if (error) {
             ns.tprint("There was an error in hacking one or more servers. Is there enough RAM?");
         }

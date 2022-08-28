@@ -2,6 +2,12 @@
 // Switch '-s' for scan
 // Swith '-n' for no terminal print
 
+// RUNTIME ERROR
+// /scripts/open_ports.js@home (PID - 6)
+// Args: ["", "-n"]
+
+// hasRootAccess: Invalid hostname: '' (empty string)
+
 /** @param {NS} ns */
 export async function main(ns) {
 	let target = ns.args[0];
@@ -73,7 +79,7 @@ export async function main(ns) {
 	} else {
 		openPorts = 0;
 
-		if (target == undefined) {
+		if (target == undefined || target == "") {
 			if (toPrint) {
 				ns.tprint("Incorrect usage. Provide argument [hostname]");
 			}
