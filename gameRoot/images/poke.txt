@@ -1,1 +1,0 @@
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/553.png" width="300" height="300"></img>

@@ -1,1 +1,0 @@
-[{"id":"db8","url":"https://cdn2.thecatapi.com/images/db8.gif","width":480,"height":320}]
