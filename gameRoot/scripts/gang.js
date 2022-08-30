@@ -2,7 +2,7 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    const namesPath = "/misc/gang_member_names.txt";
+    const namesPath = "/misc/gang_member_names.txt"; // contents must be a comma seperated list
     let memberNames = [];
 
     if (ns.fileExists(namesPath)) {
