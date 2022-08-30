@@ -2,5 +2,5 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.tprint(Math.floor(ns.heart.break()));
+    ns.tprint("Karma level: " + ns.heart.break().toFixed(0));
 }
