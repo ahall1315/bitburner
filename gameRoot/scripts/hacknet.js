@@ -4,7 +4,7 @@
 export async function main(ns) {
     let error = false;
     let targetNode = -1;
-    let numNodes = ns.hacknet.numNodes();
+    let numNodes = -1;
     let playerMoney = -1;
     let cost = -1;
     const purchaseThresh = 10 / 100; // This value is a threshold between node cost and total money as a percentage
@@ -21,6 +21,7 @@ export async function main(ns) {
 
     // buy/upgrade a hacknet node if the cost is beneath a threshold
     while (true) {
+        numNodes = ns.hacknet.numNodes()
         playerMoney = ns.getPlayer().money;
 
         // Purchasing a node
