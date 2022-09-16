@@ -45,5 +45,4 @@ sigma-cosmetics
 joesguns
 
 // To Destroy BitNode
-backdoor on world-daemon server
-can connect to from icarus
+backdoor on w0r1d_d43m0n server
