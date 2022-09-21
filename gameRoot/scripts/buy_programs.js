@@ -42,6 +42,15 @@ export async function main(ns) {
 		currency: 'USD',
 	});
 
+	try {
+		if (!ns.singularity.purchaseTor()) {
+			ns.tprint("WARN Unable to purchase TOR router. Do you have enough money?");
+			ns.exit();
+		}
+	} catch (err) {
+		ns.tprint("ERROR purchaseTor: This singularity function requires Source-File 4 to run. A power up you obtain later in the game.");
+	}
+
 	if (!ns.fileExists("BruteSSH.exe", "home") && money > costBruteSSH) {
 		canBuy.push("BruteSSH.exe");
 		money = money - costBruteSSH;
@@ -118,9 +127,9 @@ export async function main(ns) {
 		const handler = Object.keys(terminalInput)[1];
 
 		// Perform an onChange event to set some internal values.
-		terminalInput[handler].onChange({target:terminalInput});
+		terminalInput[handler].onChange({ target: terminalInput });
 
 		// Simulate an enter press
-		terminalInput[handler].onKeyDown({key:'Enter',preventDefault:()=>null});
+		terminalInput[handler].onKeyDown({ key: 'Enter', preventDefault: () => null });
 	}
 }
