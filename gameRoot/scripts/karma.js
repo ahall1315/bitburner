@@ -1,4 +1,5 @@
 // Prints the player's karma to the terminal (Requirement to start gang: -54,000)
+// Karma persists between soft resets
 
 /** @param {NS} ns */
 export async function main(ns) {
