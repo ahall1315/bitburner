@@ -5,6 +5,7 @@ import * as utils from "/lib/utils.js";
 /** @param {NS} ns */
 export async function main(ns) {
     const namesPath = "/data/gang_member_names.txt"; // Contents must be a comma seperated list
+    let inGang = false;
     let memberNames = [];
     let currentMembers = [];
     let gangInfo = null;
@@ -27,34 +28,37 @@ export async function main(ns) {
         ns.tprint("File " + namesPath + " does not exist! Cannot run script.");
         ns.exit();
     }
-
-    gangInfo = ns.gang.getGangInformation();
-
+    
     while (true) {
-        currentMembers = ns.gang.getMemberNames();
-
-        rand = utils.getRandomInt(ns, 0, memberNames.length);
-
-        if (ns.gang.canRecruitMember()) {
-            // If the new recruit is not currently in the gang
-            if (!currentMembers.includes(memberNames[rand])) {
-                // Attempt to recruit them
-                if (!ns.gang.recruitMember(memberNames[rand])) {
-                    ns.print("Failed to recruit a gang member with the name " + memberNames[i] + ". Can you recruit a gang member with that name?");
-                } else {
-                    // If they were successfully recruited, assign them to a training task
-                    if (gangInfo.isHacking) {
-                        if (!ns.gang.setMemberTask(memberNames[rand], "Train Hacking")) {
-                            ns.print("Failed to assign " + memberNames[rand] + "to Train Hacking.");
-                        }
+        try {
+            gangInfo = ns.gang.getGangInformation();
+            currentMembers = ns.gang.getMemberNames();
+    
+            rand = utils.getRandomInt(ns, 0, memberNames.length);
+    
+            if (ns.gang.canRecruitMember()) {
+                // If the new recruit is not currently in the gang
+                if (!currentMembers.includes(memberNames[rand])) {
+                    // Attempt to recruit them
+                    if (!ns.gang.recruitMember(memberNames[rand])) {
+                        ns.print("Failed to recruit a gang member with the name " + memberNames[i] + ". Can you recruit a gang member with that name?");
                     } else {
-                        if (!ns.gang.setMemberTask(memberNames[rand], "Train Combat")) {
-                            ns.print("Failed to assign " + memberNames[rand] + "to Train Combat.");
+                        // If they were successfully recruited, assign them to a training task
+                        if (gangInfo.isHacking) {
+                            if (!ns.gang.setMemberTask(memberNames[rand], "Train Hacking")) {
+                                ns.print("Failed to assign " + memberNames[rand] + "to Train Hacking.");
+                            }
+                        } else {
+                            if (!ns.gang.setMemberTask(memberNames[rand], "Train Combat")) {
+                                ns.print("Failed to assign " + memberNames[rand] + "to Train Combat.");
+                            }
                         }
+                        memberNames.splice(rand, 1) // Remove the name of the newly recruited member from the list of possible recruits
                     }
-                    memberNames.splice(rand, 1) // Remove the name of the newly recruited member from the list of possible recruits
                 }
             }
+        } catch {
+            ns.printf("ERROR Tried to recruit a gang member. Are you in a gang?");
         }
 
         await ns.sleep(10000); // sleep for 10 seconds
