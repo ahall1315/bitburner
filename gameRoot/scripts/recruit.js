@@ -28,14 +28,20 @@ export async function main(ns) {
         ns.tprint("File " + namesPath + " does not exist! Cannot run script.");
         ns.exit();
     }
-    
+
     while (true) {
         try {
             gangInfo = ns.gang.getGangInformation();
             currentMembers = ns.gang.getMemberNames();
-    
-            rand = utils.getRandomInt(ns, 0, memberNames.length);
-    
+
+            rand = utils.getRandomInt(ns, 0, memberNames.length - 1);
+
+            // If the name is already in the gang, remove that name from the list of possible recruits
+            if (currentMembers.includes(memberNames[rand])) {
+                memberNames.splice(rand, 1);
+                continue;
+            }
+
             if (ns.gang.canRecruitMember()) {
                 // If the new recruit is not currently in the gang
                 if (!currentMembers.includes(memberNames[rand])) {
@@ -53,12 +59,12 @@ export async function main(ns) {
                                 ns.print("Failed to assign " + memberNames[rand] + "to Train Combat.");
                             }
                         }
-                        memberNames.splice(rand, 1) // Remove the name of the newly recruited member from the list of possible recruits
+                        memberNames.splice(rand, 1); // Remove the name of the newly recruited member from the list of possible recruits
                     }
                 }
             }
         } catch {
-            ns.printf("ERROR Tried to recruit a gang member. Are you in a gang?");
+            ns.printf("ERROR Failed to recruit a gang member. Are you in a gang?");
         }
 
         await ns.sleep(10000); // sleep for 10 seconds
