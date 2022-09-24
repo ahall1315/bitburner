@@ -20,10 +20,10 @@ export async function main(ns) {
             const values = [];
             // Add script income per second
             headers.push("ScrInc");
-            values.push(ns.nFormat(ns.getTotalScriptIncome()[0].toPrecision(5), "$0.000a") + '/sec');
+            values.push(ns.nFormat(ns.getTotalScriptIncome()[0], "$0.000a") + '/sec');
             // Add script exp gain rate per second
             headers.push("ScrExp");
-            values.push(ns.getTotalScriptExpGain().toPrecision(5) + '/sec');
+            values.push(ns.nFormat(ns.getTotalScriptExpGain(), "0.000a") + '/sec');
             // TODO: Add more neat stuff
 
             // Now drop it into the placeholder elements
