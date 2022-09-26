@@ -3,28 +3,29 @@
 /** @param {NS} ns */
 export async function main(ns) {
     let startServer = ns.getHostname();
-	let target = ns.args[0];
     let terminalString = "";
-    const takeOverSwitch = "-c";
     let pid = -1;
     let error = false;
+    
+    const args = ns.flags([["help", false], ["to", false]])
+	let target = args._[0];
 
-	if (target === undefined || ns.args[1] == undefined) {
-        ns.tprint("Incorrect usage. Provide [hostname] of target. Optional switch '-to' to takeover the target.");
+	if (args.help || args._.length === 0) {
+        ns.tprint("This script connects to any server. Optional switch --to to take over the server.");
+        ns.tprint(`Usage: run ${ns.getScriptName()} [server]`);
+        ns.tprint("Example:");
+        ns.tprint(`> run ${ns.getScriptName()} n00dles`);
 		ns.exit();
 	}
 
-    if (target == "-c") {
-        target = ns.args[1];
-    }
-
     // Acquire a reference to the terminal text field
-	const terminalInput = document.getElementById("terminal-input");
+	const terminalInput = eval("document").getElementById("terminal-input");
 
     // Get a reference to the React event handler.
     const handler = Object.keys(terminalInput)[1];
 
-    if (ns.args.includes(takeOverSwitch)) {
+    // If the takeover switch was provided
+    if (args.to) {
         pid = ns.run("/scripts/takeover.js", 1, target);
 
         if (pid <= 0) {
