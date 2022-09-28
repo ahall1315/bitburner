@@ -13,6 +13,7 @@ export async function main(ns) {
     const noPrintSwitch = "-n";
     const noMoneySwitch = "-m";
 
+    let canHack = [];
     let toHack = [];
     let pid = -1;
     let threads = 0;
@@ -29,8 +30,12 @@ export async function main(ns) {
     threads = getMaxThreads(host);
     ns.tprint("Total threads: " + threads);
 
-    toHack = ns.read(toHackPath);
-    toHack = toHack.split(",");
+    canHack = ns.read(toHackPath);
+    canHack = JSON.parse(canHack);
+
+    for (let i = 0; i < canHack.length; i++) {
+        toHack.push(canHack[i]);
+    }
 
     threads = divideThreads(threads, toHack);
     ns.tprint("Threads per target: " + threads);
