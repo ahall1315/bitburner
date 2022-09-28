@@ -2,13 +2,7 @@
 // Switch '-s' for scan
 // Swith '-n' for no terminal print
 
-// RUNTIME ERROR
-// /scripts/open_ports.js@home (PID - 6)
-// Args: ["", "-n"]
-
-// hasRootAccess: Invalid hostname: '' (empty string)
-
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 	let target = ns.args[0];
 	let error = false;

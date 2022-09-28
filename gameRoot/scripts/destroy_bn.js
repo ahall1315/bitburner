@@ -1,4 +1,4 @@
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let bn = ns.args[0];
     let confirm = false;

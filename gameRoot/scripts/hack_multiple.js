@@ -1,6 +1,6 @@
 // Open ports and hack servers provided as arguments
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 	var targets = [];
 	var printTargets = "";

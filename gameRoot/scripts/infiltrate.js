@@ -1,6 +1,6 @@
 // Writes info about infiltration locations to a file
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let locations = ns.infiltration.getPossibleLocations();
     let infiltrations = [];

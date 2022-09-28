@@ -2,7 +2,7 @@
 
 import * as utils from "/lib/utils.js";
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const namesPath = "/data/gang_member_names.txt"; // Contents must be a comma seperated list
     let inGang = false;

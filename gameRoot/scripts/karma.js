@@ -1,7 +1,7 @@
 // Prints the player's karma to the terminal (Requirement to start gang: -54,000)
 // Karma persists between soft resets
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const gangRequirement = -54000;
     let karma = ns.heart.break();

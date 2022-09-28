@@ -1,6 +1,6 @@
 // Experiment with hacknet api
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let error = false;
     let targetNode = -1;

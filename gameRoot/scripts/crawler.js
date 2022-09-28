@@ -1,6 +1,6 @@
 // Scans the network and gets the names of all servers that you can hack
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
     let hosts = scanNetwork();

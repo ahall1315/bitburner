@@ -1,6 +1,6 @@
 // Buys equipment for gang members you have enough money for
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let money = -1; // Player's money after cost of equipment
     let cost = -1; // Cost of equipment

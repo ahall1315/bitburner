@@ -1,6 +1,6 @@
 // Connects to the provided host
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let startServer = ns.getHostname();
     let terminalString = "";

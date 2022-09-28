@@ -1,6 +1,6 @@
 // Moves all script files in a source directory to a server
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 	let hostname = ns.getHostname();
 	let sourceDirectory = ns.args[0];

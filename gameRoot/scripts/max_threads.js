@@ -1,6 +1,6 @@
 // Prints the maximum threads a host can run a script
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
 	const thisHostSwitch = "-h";

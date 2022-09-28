@@ -1,6 +1,6 @@
 // Original from: https://github.com/bitburner-official/bitburner-scripts/blob/master/custom-stats.js
 
-/** @param {NS} ns **/
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const args = ns.flags([["help", false]]);
     if (args.help) {

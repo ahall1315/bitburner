@@ -1,6 +1,6 @@
 // Distributes scripts to all connected servers
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
 	let servers = ns.scan();

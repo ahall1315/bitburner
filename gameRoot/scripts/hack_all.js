@@ -1,11 +1,6 @@
 // Hacks all servers from home that you can hack with maximum threads
 
-// RUNTIME ERROR
-// /scripts/hack_all.js@home (PID - 4)
-
-// run: Invalid thread count. Must be numeric and > 0, is 0
-
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
     const host = ns.getHostname();
