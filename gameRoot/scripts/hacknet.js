@@ -1,4 +1,4 @@
-// Experiment with hacknet api
+// Runs automated hacknet manager
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
