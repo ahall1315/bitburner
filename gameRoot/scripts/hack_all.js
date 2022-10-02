@@ -14,7 +14,22 @@ export async function main(ns) {
     let threads = 0;
     let error = false;
 
-    ns.killall(host, true);
+    const args = ns.flags([["help", false], ["killHack", false]]);
+    if (args.help) {
+        ns.tprint("This script will hack all servers you can hack with the maximum amount of threads. It will kill all running scripts and start the script /scripts/hack.js.");
+        ns.tprint("Optional argument '--killHack' to only kill the hacking scripts.");
+        ns.tprint(`Usage: run ${ns.getScriptName()}`);
+        ns.tprint("Example:");
+        ns.tprint(`> run ${ns.getScriptName()} --killHack`);
+        return;
+    }
+
+    if (args.killHack) {
+        ns.scriptKill(hackScript, host);
+    } else {
+        ns.killall(host, true);
+    }
+
     await ns.sleep(1000); // Waits for scripts to be killed
 
     // Populate can_hack.txt
