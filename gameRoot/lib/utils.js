@@ -1,11 +1,11 @@
 // Library for bitburner scripts. All exported functions must have ns as a parameter.
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     ns.tprint("This script functions as a library which stores utilities for other scripts.");
 }
 
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export function getRandomInt(ns, min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
