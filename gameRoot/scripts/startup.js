@@ -6,6 +6,8 @@ export async function main(ns) {
 
     ns.run("/scripts/custom_stats.js");
 
+    ns.run("/scripts/join_factions.js", 1, "-a");
+
     pid = ns.run("/scripts/buy_programs.js");
 
     while(ns.isRunning(pid)) {
