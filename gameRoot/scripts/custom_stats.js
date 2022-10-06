@@ -10,14 +10,20 @@ export async function main(ns) {
         ns.tprint(`> run ${ns.getScriptName()}`);
         return;
     }
+
+    ns.atExit(() => { hook0.innerHTML = ""; hook1.innerHTML = ""; });
     
     const doc = eval("document");
     const hook0 = doc.getElementById('overview-extra-hook-0');
     const hook1 = doc.getElementById('overview-extra-hook-1');
+    const hook2 = doc.getElementById('overview-extra-hook-1');
     while (true) {
         try {
             const headers = []
             const values = [];
+            // Add player's current karma
+            headers.push("Karma");
+            values.push(ns.nFormat(ns.heart.break(), "0."));
             // Add script income per second
             headers.push("ScrInc");
             values.push(ns.nFormat(ns.getTotalScriptIncome()[0], "$0.000a") + '/sec');
@@ -34,4 +40,5 @@ export async function main(ns) {
         }
         await ns.sleep(1000);
     }
+    
 }
