@@ -9,6 +9,7 @@ export async function main(ns) {
     const toJoin = [
         "Sector-12"
     ]
+    // Edit this list to change wich scripts will be run. They will be run in descending order.
     const toRun = [
         {
             script: "/scripts/custom_stats.js",
@@ -52,7 +53,7 @@ export async function main(ns) {
             }
 
             if (toRun[i] === "scripts/join_factions.js") {
-                // Waits for factions to be joined
+                // Waits for factions to be joined (so sleeves can be assigned to work for them)
                 while (!allFactions) {
                     let count = 0;
                     for (let i = 0; i < toJoin.length; i++) {
