@@ -8,3 +8,5 @@ export const portPrograms = [
     "HTTPWorm.exe",
     "SQLInject.exe"
 ]
+
+export const gangKarmaRequirement = -54000;
