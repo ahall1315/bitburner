@@ -20,7 +20,7 @@ export async function main(ns) {
         },
         {
             script: "/scripts/join_factions.js",
-            args: null
+            args: ["-a"]
         },
         {
             script: "/scripts/assign_sleeves.js",
