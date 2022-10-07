@@ -37,9 +37,9 @@ export async function main(ns) {
             ns.tprint("          Starting security level: " + infiltrations[i].location.infiltrationData.startingSecurityLevel.toFixed(2));
     
             ns.tprint("      Rewards");
-            ns.tprint("          Cash for selling: " + infiltrations[i].reward.sellCash);
-            ns.tprint("          Reputation for trading: " + infiltrations[i].reward.tradeRep);
-            ns.tprint("          SoA Reputation: " + infiltrations[i].reward.SoARep);
+            ns.tprint("          Cash for selling: " + ns.nFormat(infiltrations[i].reward.sellCash, "$0.000a"));
+            ns.tprint("          Reputation for trading: " + ns.nFormat(infiltrations[i].reward.tradeRep, "0.000a"));
+            ns.tprint("          SoA Reputation: " + ns.nFormat(infiltrations[i].reward.SoARep, "0.000a"));
     
             ns.tprint("\n");
         }
