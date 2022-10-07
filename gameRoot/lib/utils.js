@@ -11,7 +11,7 @@ export async function main(ns) {
 export function getRandomInt(ns, min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
 
 /** @param {import("NetscriptDefinitions").NS} ns */
@@ -25,4 +25,12 @@ export function getNumOwnedPortPrograms(ns) {
     }
 
     return count;
+}
+
+/** @param {import("NetscriptDefinitions").NS} ns */
+// Get the ratio between player's karma and the gang requirement as a percentage
+export function getKarmaRatio(ns) {
+    let karma = ns.heart.break();
+
+    return ((karma.toFixed(0) / constants.gangKarmaRequirement) * 100).toFixed(0);
 }
