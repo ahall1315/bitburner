@@ -32,7 +32,7 @@ export async function main(ns) {
     }
     
     // Sort the infiltration locations by difficulty in descending order
-    if (args.sort === "difficulty") {
+    if (args.sort.toLowerCase() === "difficulty") {
         infiltrations.sort((a, b) => {
             if (a.difficulty < b.difficulty) {
                 return 1;
@@ -45,7 +45,7 @@ export async function main(ns) {
     }
 
     // Sort the infiltration locations by money in descending order
-    if (args.sort === "money" || args.sort === "cash") {
+    if (args.sort.toLowerCase() === "money" || args.sort.toLowerCase() === "cash") {
         infiltrations.sort((a, b) => {
             if (a.reward.sellCash < b.reward.sellCash) {
                 return 1;
@@ -58,7 +58,7 @@ export async function main(ns) {
     }
 
     // Sort the infiltration locations by reputation in descending order
-    if (args.sort === "reputation" || args.sort === "reputation") {
+    if (args.sort.toLowerCase() === "reputation" || args.sort.toLowerCase() === "reputation") {
         infiltrations.sort((a, b) => {
             if (a.reward.tradeRep < b.reward.tradeRep) {
                 return 1;
