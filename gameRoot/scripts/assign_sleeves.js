@@ -1,52 +1,66 @@
-// TODO: Save the current tasks that sleeves are doing to a file
-
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     // Edit this list to change the tasks to be assigned to sleeves
-    const sleeveTasks = {
-        sleeves: [
-            {
-                number: "0",
-                type: "FACTION",
-                factionName: "Sector-12",
-                factionWorkType: "Field Work"
-            },
-            {
-                number: "1",
-                type: "CRIME",
-                crimeName: "Homicide"
-            },
-            {
-                number: "2",
-                type: "FACTION",
-                factionName: "CyberSec",
-                factionWorkType: "Hacking Contracts"
-            },
-            {
-                number: "3",
-                type: "FACTION",
-                factionName: "NiteSec",
-                factionWorkType: "Hacking Contracts"
-            },
-            {
-                number: "4",
-                type: "FACTION",
-                factionName: "Aevum",
-                factionWorkType: "Field Work"
-            }     
-
-        ]
-    }
+    let sleeves = {};
     let error = false;
+    let taskPath = "/data/sleeve_tasks.txt";
 
-    let args = ns.flags([["help", false]])
+    let args = ns.flags([["help", false], ["save", false]])
 
     if (args.help) {
-        
+        ns.tprint("This script will assign your sleeves to certain tasks from a file and is intended to be used after a soft reset.");
+        ns.tprint("Option argument --save to save the current sleeve tasks to file. This will write to " + taskPath);
+        ns.tprint(`Usage: run ${ns.getScriptName()}`);
+        ns.tprint("Example 1:");
+        ns.tprint(`> run ${ns.getScriptName()}`);
+        ns.tprint("Example 2:");
+        ns.tprint(`> run ${ns.getScriptName()} --save`);
+        return;
     }
 
-    for (let i = 0; i < sleeveTasks.sleeves.length; i++) {
-        let sleeve = sleeveTasks.sleeves[i];
+    if (args.save) {
+        ns.tprint("Saving sleeve tasks to " + taskPath + "...");
+
+        let numSleeves = ns.sleeve.getNumSleeves();
+        let sleeveData = [];
+
+        for (let i = 0; i < numSleeves; i++) {
+            let sleeve = ns.sleeve.getTask(i);
+
+            if (sleeve === null) {
+                sleeve = {};
+                sleeve.type = "IDLE";
+            }
+            if (sleeve.type === undefined) {
+                sleeve.type = "BLADEBURNER";
+            }
+            // ns.setToUniversityCourse() doesn't like when the className parameter has no spaces
+            if (sleeve.type === "CLASS") {
+                switch (sleeve.classType) {
+                    case "STUDYCOMPUTERSCIENCE":
+                        sleeve.classType = "STUDY COMPUTER SCIENCE";
+                        break;
+                    case "DATASTRUCTURES":
+                        sleeve.classType = "DATA STRUCTURES";
+                        break;
+                }
+            }
+
+            sleeve.number = i;
+
+            sleeveData.push(sleeve);
+        }
+
+        sleeveData = JSON.stringify(sleeveData, null, 1);
+        ns.write(taskPath, sleeveData, "w");
+        return;
+    }
+
+    sleeves = ns.read(taskPath);
+    sleeves = JSON.parse(sleeves);
+
+    for (let i = 0; i < sleeves.length; i++) {
+        let sleeve = sleeves[i];
 
         try {
             switch (sleeve.type) {
@@ -61,13 +75,13 @@ export async function main(ns) {
                     }
                     break;
                 case "CRIME":
-                    if (!ns.sleeve.setToCommitCrime(sleeve.number, sleeve.crimeName)) {
-                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.crimeName}`;
+                    if (!ns.sleeve.setToCommitCrime(sleeve.number, sleeve.crimeType)) {
+                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.crimeType}`;
                     }
                     break;
                 case "CLASS":
-                    if (!ns.sleeve.setToUniversityCourse(sleeve.number, sleeve.universityName, sleeve.className)) {
-                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.className} at ${sleeve.universityName}`;
+                    if (!ns.sleeve.setToUniversityCourse(sleeve.number, sleeve.location, sleeve.classType)) {
+                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.classType} at ${sleeve.location}`;
                     }
                     break;
                 case "GYM":
@@ -76,17 +90,17 @@ export async function main(ns) {
                     }
                     break;
                 case "BLADEBURNER":
-                    if (sleeve.contract === undefined) {
-                        if (!ns.sleeve.setToBladeburnerAction(sleeve.number, sleeve.actionName)) {
+                    if (sleeve.actionType === "Contracts") {
+                        if (!ns.sleeve.setToBladeburnerAction(sleeve.number, "Take on contracts", sleeve.actionName)) {
                             throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.actionName} for Bladeburners`;
                         }
                     } else {
-                        if (!ns.sleeve.setToBladeburnerAction(sleeve.number, sleeve.actionName, sleeve.contract)) {
-                            throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.contract} for Bladeburners`;
+                        if (!ns.sleeve.setToBladeburnerAction(sleeve.number, sleeve.actionName)) {
+                            throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.actionName} for Bladeburners`;
                         }
                     }
                     break;
-                case "SHOCK_RECOVERY":
+                case "RECOVERY":
                     if (!ns.sleeve.setToShockRecovery(sleeve.number)) {
                         throw `ERROR Failed to assign sleeve ${sleeve.number} to Shock Recovery`;
                     }
