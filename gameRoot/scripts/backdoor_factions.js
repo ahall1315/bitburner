@@ -42,31 +42,40 @@ export async function main(ns) {
         return;
     }
 
-    ns.tprint(args);
-
     for (let i = 0; i < factions.length; i++) {
+        let canNUKE = false;
+        let canHack = false;
+
         if (playerFactions.includes(factions[i].name)) {
             factions[i].joined = true;
             continue;
         }
 
-        ns.run("/scripts/connect.js", 1, factions[i].server, "--to");
-        await ns.sleep(1000); // Wait to connect
         if (getNumOwnedPortPrograms(ns) < ns.getServerNumPortsRequired(factions[i].server)) {
             ns.tprint("WARN Not enough port programs owned to backdoor " + factions[i].server + "!");
             ns.tprint("WARN You need: " + ns.getServerNumPortsRequired(factions[i].server) + " port programs");
         } else {
-            if (ns.getPlayer().skills.hacking >= ns.getServer(factions[i].server).requiredHackingSkill) {
-                await ns.singularity.installBackdoor();
-            } else {
-                ns.tprint("WARN Not a high enough hacking skill to backdoor " + factions[i].server + "!");
-                ns.tprint("WARN You need: " + ns.getServer(factions[i].server).requiredHackingSkill + " hacking skill");
-            }
+            canNUKE = true;
         }
+        if (ns.getPlayer().skills.hacking <= ns.getServer(factions[i].server).requiredHackingSkill) {
+            ns.tprint("WARN Not a high enough hacking skill to backdoor " + factions[i].server + "!");
+            ns.tprint("WARN You need: " + ns.getServer(factions[i].server).requiredHackingSkill + " hacking skill");
+        } else {
+            canHack = true;
+        }
+        ns.tprintf("--------------------------------------------------------------------------------------------");
+
+        if (canNUKE && canHack) {
+            ns.run("/scripts/connect.js", 1, factions[i].server, "--to");
+            await ns.sleep(1000); // Wait to connect
+            await ns.singularity.installBackdoor();
+        }
+
         if (ns.getServer(factions[i].server).backdoorInstalled) {
             factions[i].backdoor = true;
         }
         ns.singularity.connect("home");
+
     }
 
     ns.tprint("Successfully backdoored:\n");
@@ -76,6 +85,7 @@ export async function main(ns) {
         }
     }
 
+
     for (let i = 0; i < factions.length; i++) {
         if (!ns.getServer(factions[i].server)) {
             ns.tprintf("WARN Failed to backdoor: " + factions[i].server + "You need " + ns.getServer(factions[i].server).requiredHackingSkill + "hacking skill to backdoor this server.\n");
@@ -84,19 +94,19 @@ export async function main(ns) {
 
     if (args.jf) {
         ns.tprint("Attempting to join backdoored factions...");
-        
+
         // Wait for faction invitations
         while (!allInvitations) {
             let invitations = ns.singularity.checkFactionInvitations();
             let toJoin = [];
             playerFactions = ns.getPlayer().factions;
-    
+
             for (let i = 0; i < factions.length; i++) {
                 if (factions[i].backdoor && !factions[i].joined) {
                     toJoin.push(factions[i].name);
                 }
             }
-    
+
             // Remove any factions you are already in from the list of factions to join
             for (let i = 0; i < toJoin.length; i++) {
                 if (playerFactions.includes(toJoin[i])) {
@@ -104,17 +114,17 @@ export async function main(ns) {
                     i--;
                 }
             }
-    
+
             ns.print(toJoin);
-            
+
             // If there is an invitation for every backdoored faction
             if (toJoin.every(r => invitations.includes(r))) {
                 allInvitations = true;
             }
-    
+
             await ns.sleep(5000);
         }
-    
+
         for (let i = 0; i < factions.length; i++) {
             if (factions[i].joined) {
                 ns.toast("Already in " + factions[i].name, "info");
