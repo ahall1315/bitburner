@@ -97,7 +97,7 @@ export async function main(ns) {
                     break;
                 case "GYM":
                     if (!ns.sleeve.setToGymWorkout(sleeve.number, sleeve.location, sleeve.classType)) {
-                        throw `ERROR Failed to assign sleeve ${sleeve.number} to train ${sleeve.classType} at ${sleeve.location}`;
+                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.classType} at ${sleeve.location}`;
                     }
                     break;
                 case "BLADEBURNER":
