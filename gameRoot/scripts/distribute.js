@@ -21,7 +21,7 @@ export async function main(ns) {
 	for (let i = 0; i < servers.length; i++) {
 		ns.print(servers[i]);
 		if (servers[i] != "home") {
-			pid = ns.run("/scripts/scp.js", 1, "/scripts/", servers[i]);
+			pid = ns.run("/scripts/scp.js", 1, "/", servers[i]);
 			// If the script failed to run
 			if (pid === 0) {
 				error = true;
