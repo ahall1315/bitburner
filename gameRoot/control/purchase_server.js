@@ -22,7 +22,7 @@ export async function main(ns) {
 	if (serverCount == undefined) {
 		ns.tprint("Incorrect usage. Please provide [count] of servers to buy.");
 	} else {
-		if (serverCount > pServLimit) {
+		if (serverCount > pServLimit || serverCount <= 0 || isNaN(serverCount)) {
 			ns.tprint("Cannot buy that many servers!");
 			ns.tprint("You can buy " + (pServLimit - ns.getPurchasedServers().length) + " more server(s).");
 			ns.exit();
