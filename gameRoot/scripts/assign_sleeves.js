@@ -121,6 +121,10 @@ export async function main(ns) {
                         throw `ERROR Failed to assign sleeve ${sleeve.number} to Synchronize`;
                     }
                     break;
+                default:
+                    if (!ns.sleeve.setToSynchronize(sleeve.number)) {
+                        throw `ERROR Failed to assign sleeve ${sleeve.number} to Synchronize`;
+                    }
             }
         } catch (err) {
             ns.print(err);
