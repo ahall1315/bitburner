@@ -66,7 +66,7 @@ export async function main(ns) {
 					ns.tprintf(`
 Thank you for shopping with us!
 				
-__________________________________________
+ __________________________________________
 |                 888                      |
 |                 888                      |
 |  .d88b.  .d88b. 888 .d88b. 88888b.d88b.  |
