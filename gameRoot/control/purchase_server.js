@@ -1,7 +1,70 @@
-/** @param {NS} ns */
+/** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
-	ns.tprint(`
+	const args = ns.flags([["help", false]]);
+	if (args.help) {
+		ns.tprintf("This script will prompt the user with a menu to purchase servers.");
+		ns.tprintf(`Usage: run ${ns.getScriptName()} [Amount of servers]`);
+		ns.tprintf("Example:");
+		ns.tprintf(`> run ${ns.getScriptName()} 25`);
+		return;
+	}
+
+	let serverCount = args._[0];
+	let cost = "0";
+	let confirm = false;
+	let purchasedCount = 0;
+	let ram = -1;
+	const hostPrefix = "golem";
+	const pServLimit = ns.getPurchasedServerLimit();
+	const pServMaxRam = ns.getPurchasedServerMaxRam();
+
+	if (serverCount == undefined) {
+		ns.tprint("Incorrect usage. Please provide [count] of servers to buy.");
+	} else {
+		if (serverCount > pServLimit) {
+			ns.tprint("Cannot buy that many servers!");
+			ns.tprint("You can buy " + (pServLimit - ns.getPurchasedServers().length) + " more server(s).");
+			ns.exit();
+		}
+
+		ram = await ns.prompt("How many GB of RAM?", { type: "select", choices: getRamOptions(pServMaxRam) });
+		if (!isPowerofTwo(ram)) {
+			ns.tprint("RAM must be a power of two!")
+		} else {
+				cost = serverCount * ns.getPurchasedServerCost(ram);
+
+				confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ram} GB of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
+
+				if (confirm) {
+					if (cost > ns.getPlayer().money) {
+						ns.tprintf("You do not have enough money to purchase " + serverCount + " server(s) for " + ns.nFormat(cost, "$0.000a") + "!");
+					} else {
+
+						let purchasedServers = ns.getPurchasedServers();
+
+						for (let i = 0; i < serverCount; ++i) {
+							if (purchasedServers.includes(hostPrefix + i)) {
+								serverCount++
+
+								if (serverCount <= pServLimit) {
+									let purchasedHost = ns.purchaseServer(hostPrefix + i, ram);
+									if (!(purchasedHost == "")) {
+										purchasedCount++;
+									} else {
+										ns.print("ERROR Failed to purchase " + hostPrefix + i);
+									}
+								} else {
+									ns.tprint("Cannot purchase any more servers!");
+								}
+							}
+						}
+						if (purchasedCount != 0) {
+							ns.tprintf(`Successfully purchased ${purchasedCount} server(s).`)
+
+							ns.tprintf(`
+		Thank you for shopping with us!
+						
  __________________________________________
 |                 888                      |
 |                 888                      |
@@ -13,65 +76,26 @@ export async function main(ns) {
 |      888                                 |
 | Y8b d88P                                 |
 |  "Y88P"                server net        |
-|__________________________________________|`);
+|__________________________________________|
 
-
-	let serverCount = ns.args[0];
-	let ram = ns.args[1];
-	const hostPrefix = "golem";
-	var cost = "0";
-	var confirm = false;
-	var purchasedCount = 0;
-
-	// Create number formatter for USD.
-	var formatter = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-	});
-
-	if (serverCount == undefined) {
-		ns.tprint("Incorrect usage. Please provide [count] of servers to buy.");
-	} else {
-		if (ram == undefined) {
-			ns.tprint("Incorrect usage. Please provide [ram] of server to purchase.");
-		} else {
-			if (!isPowerofTwo(ram)) {
-				ns.tprint("RAM must be a power of two!")
-			} else {
-				if (serverCount > ns.getPurchasedServerLimit()) {
-					ns.tprint("Cannot buy that many servers!");
-				} else {
-					cost = formatter.format(serverCount * ns.getPurchasedServerCost(ram));
-
-					confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ram} GB of RAM \nwill cost ${cost}. \nConfirm?`, { type: "boolean" });
-
-					if (confirm) {
-						var purchasedServers = ns.getPurchasedServers();
-
-						for (var i = 0; i < serverCount; ++i) {
-							if (purchasedServers.includes(hostPrefix + i)) {
-								serverCount++
-							} else {
-								if (serverCount <= ns.getPurchasedServerLimit()) {
-									ns.purchaseServer(hostPrefix + i, ram);
-									purchasedCount++;
-								} else {
-									ns.tprint("Cannot purchase any more servers!");
-								}
-							}
-						}
-						if (purchasedCount != 0) {
-							ns.tprint(`Successfully purchased ${purchasedCount} server(s).`)
+`);
 						}
 					}
 				}
-
-			}
-
 		}
 	}
 
 	function isPowerofTwo(x) {
 		return ((x != 0) && !(x & (x - 1)));
+	}
+
+	function getRamOptions(maxRam) {
+		let ramOptions = [];
+		for (let i = 0; i <= maxRam; i++) {
+			if (isPowerofTwo(i)) {
+				ramOptions.push(i);
+			}
+		}
+		return ramOptions;
 	}
 }
