@@ -19,7 +19,7 @@ export function getNumOwnedPortPrograms(ns) {
     let count = 0;
 
     for (let i = 0; i < constants.portPrograms.length; i++) {
-        if (ns.fileExists(constants.portPrograms[i])) {
+        if (ns.fileExists(constants.portPrograms[i], "home")) {
             count++;
         }
     }
