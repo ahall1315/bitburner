@@ -1,6 +1,5 @@
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
-    // Edit this list to change the tasks to be assigned to sleeves
     let sleeves = {};
     let error = false;
     let taskPath = "/data/sleeve_tasks.txt";
@@ -8,13 +7,13 @@ export async function main(ns) {
     let args = ns.flags([["help", false], ["save", false]])
 
     if (args.help) {
-        ns.tprint("This script will assign your sleeves to certain tasks from a file and is intended to be used after a soft reset.");
-        ns.tprint("Option argument --save to save the current sleeve tasks to file. This will write to " + taskPath);
-        ns.tprint(`Usage: run ${ns.getScriptName()}`);
-        ns.tprint("Example 1:");
-        ns.tprint(`> run ${ns.getScriptName()}`);
-        ns.tprint("Example 2:");
-        ns.tprint(`> run ${ns.getScriptName()} --save`);
+        ns.tprintf("This script will assign your sleeves to certain tasks from a file and is intended to be used after a soft reset.");
+        ns.tprintf("Option argument --save to save the current sleeve tasks to file. This will write to " + taskPath);
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.tprintf("Example 1:");
+        ns.tprintf(`> run ${ns.getScriptName()}`);
+        ns.tprintf("Example 2:");
+        ns.tprintf(`> run ${ns.getScriptName()} --save`);
         return;
     }
 
@@ -43,6 +42,18 @@ export async function main(ns) {
                     case "DATASTRUCTURES":
                         sleeve.classType = "DATA STRUCTURES";
                         break;
+                    case "GYMSTRENGTH":
+                        sleeve.type = "GYM";
+                        sleeve.classType = "TRAIN STRENGTH"; 
+                    case "GYMDEFENSE":
+                        sleeve.type = "GYM";
+                        sleeve.classType = "TRAIN DEFENSE"; 
+                    case "GYMDEXTERITY":
+                        sleeve.type = "GYM";
+                        sleeve.classType = "TRAIN DEXTERITY"; 
+                    case "GYMAGILITY":
+                        sleeve.type = "GYM";
+                        sleeve.classType = "TRAIN AGILITY"; 
                 }
             }
 
@@ -85,8 +96,8 @@ export async function main(ns) {
                     }
                     break;
                 case "GYM":
-                    if (!ns.sleeve.setToGymWorkout(sleeve.number, sleeve.gymName, sleeve.stat)) {
-                        throw `ERROR Failed to assign sleeve ${sleeve.number} to train ${sleeve.stat} at ${sleeve.gymName}`;
+                    if (!ns.sleeve.setToGymWorkout(sleeve.number, sleeve.location, sleeve.classType)) {
+                        throw `ERROR Failed to assign sleeve ${sleeve.number} to ${sleeve.classType} at ${sleeve.location}`;
                     }
                     break;
                 case "BLADEBURNER":
