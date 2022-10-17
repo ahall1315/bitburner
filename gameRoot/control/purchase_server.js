@@ -22,7 +22,7 @@ export async function main(ns) {
 	if (serverCount == undefined) {
 		ns.tprint("Incorrect usage. Please provide [count] of servers to buy.");
 	} else {
-		if (serverCount > pServLimit || serverCount <= 0 || isNaN(serverCount)) {
+		if (serverCount > (pServLimit - ns.getPurchasedServers().length) || serverCount <= 0 || isNaN(serverCount)) {
 			ns.tprint("Cannot buy that many servers!");
 			ns.tprint("You can buy " + (pServLimit - ns.getPurchasedServers().length) + " more server(s).");
 			ns.exit();
@@ -32,40 +32,41 @@ export async function main(ns) {
 		if (!isPowerofTwo(ram)) {
 			ns.tprint("RAM must be a power of two!")
 		} else {
-				cost = serverCount * ns.getPurchasedServerCost(ram);
+			cost = serverCount * ns.getPurchasedServerCost(ram);
 
-				confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ns.nFormat(ram, "0,0")} GB of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
+			confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ns.nFormat(ram, "0,0")} GB of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
 
-				if (confirm) {
-					if (cost > ns.getPlayer().money) {
-						ns.tprintf("You do not have enough money to purchase " + serverCount + " server(s) for " + ns.nFormat(cost, "$0.000a") + "!");
-					} else {
+			if (confirm) {
+				if (cost > ns.getPlayer().money) {
+					ns.tprintf("You do not have enough money to purchase " + serverCount + " server(s) for " + ns.nFormat(cost, "$0.000a") + "!");
+				} else {
 
-						let purchasedServers = ns.getPurchasedServers();
+					let purchasedServers = ns.getPurchasedServers();
 
-						for (let i = 0; i < serverCount; ++i) {
-							if (purchasedServers.includes(hostPrefix + i)) {
-								serverCount++
-
-								if (serverCount <= pServLimit) {
-									let purchasedHost = ns.purchaseServer(hostPrefix + i, ram);
-									if (!(purchasedHost == "")) {
-										purchasedCount++;
-									} else {
-										ns.print("ERROR Failed to purchase " + hostPrefix + i);
-									}
+					for (let i = 0; i < serverCount; ++i) {
+						if (purchasedServers.includes(hostPrefix + i)) {
+							serverCount++;
+						} else {
+							if (serverCount <= pServLimit) {
+								let purchasedHost = ns.purchaseServer(hostPrefix + i, ram);
+								if (!(purchasedHost == "")) {
+									purchasedCount++;
 								} else {
-									ns.tprint("Cannot purchase any more servers!");
+									ns.print("ERROR Failed to purchase " + hostPrefix + i);
 								}
+							} else {
+								ns.tprint("Cannot purchase any more servers!");
 							}
 						}
-						if (purchasedCount != 0) {
-							ns.tprintf(`Successfully purchased ${purchasedCount} server(s).`)
+					}
+				}
+				if (purchasedCount != 0) {
+					ns.tprintf(`Successfully purchased ${purchasedCount} server(s) with ${ram} GB of RAM.`);
 
-							ns.tprintf(`
-	Thank you for shopping with us!
-						
- __________________________________________
+					ns.tprintf(`
+Thank you for shopping with us!
+				
+__________________________________________
 |                 888                      |
 |                 888                      |
 |  .d88b.  .d88b. 888 .d88b. 88888b.d88b.  |
@@ -79,12 +80,10 @@ export async function main(ns) {
 |__________________________________________|
 
 `);
-						}
-					}
 				}
+			}
 		}
 	}
-
 	function isPowerofTwo(x) {
 		return ((x != 0) && !(x & (x - 1)));
 	}
