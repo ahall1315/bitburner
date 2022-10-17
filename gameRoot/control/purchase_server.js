@@ -34,7 +34,7 @@ export async function main(ns) {
 		} else {
 				cost = serverCount * ns.getPurchasedServerCost(ram);
 
-				confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ram} GB of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
+				confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ns.nFormat(ram, "0,0")} GB of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
 
 				if (confirm) {
 					if (cost > ns.getPlayer().money) {
@@ -63,7 +63,7 @@ export async function main(ns) {
 							ns.tprintf(`Successfully purchased ${purchasedCount} server(s).`)
 
 							ns.tprintf(`
-		Thank you for shopping with us!
+	Thank you for shopping with us!
 						
  __________________________________________
 |                 888                      |
