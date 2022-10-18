@@ -34,3 +34,12 @@ export function getKarmaRatio(ns) {
 
     return ((karma.toFixed(0) / constants.gangKarmaRequirement) * 100).toFixed(0);
 }
+
+/**
+ * Gets threads for a given host RAM and script RAM
+ * 
+ * @returns threads for given host RAM and script RAM
+*/
+export function getThreads(ns, hostRam, scriptRam) {
+    return Math.floor(hostRam / scriptRam);
+}
