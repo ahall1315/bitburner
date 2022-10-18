@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
-        "baseUrl": "."
+        "baseUrl": ".",
+        "target": "es6",
+        "allowSyntheticDefaultImports": true
     }
 }
