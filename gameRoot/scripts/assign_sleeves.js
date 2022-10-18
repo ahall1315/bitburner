@@ -1,14 +1,17 @@
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     let sleeves = {};
+    let numSleeves = ns.sleeve.getNumSleeves();
+    let sleeveData = [];
     let error = false;
     let taskPath = "/data/sleeve_tasks.txt";
 
-    let args = ns.flags([["help", false], ["save", false]])
+    let args = ns.flags([["help", false], ["save", false], ["reset", false]]);
 
     if (args.help) {
         ns.tprintf("This script will assign your sleeves to certain tasks from a file and is intended to be used after a soft reset.");
-        ns.tprintf("Option argument --save to save the current sleeve tasks to file. This will write to " + taskPath);
+        ns.tprintf("Optional argument --save to save the current sleeve tasks to file. This will write to " + taskPath);
+        ns.tprintf("Optional argument --reset to reset the sleeve tasks to idle for the file. This will write to " + taskPath);
         ns.tprintf(`Usage: run ${ns.getScriptName()}`);
         ns.tprintf("Example 1:");
         ns.tprintf(`> run ${ns.getScriptName()}`);
@@ -17,11 +20,24 @@ export async function main(ns) {
         return;
     }
 
+    if (args.reset) {
+        ns.tprint("Resetting sleeve data...");
+
+        for (let i = 0; i < numSleeves; i++) {
+            let sleeve = ns.sleeve.getTask(i);
+            sleeve = {};
+            sleeve.type = "IDLE";
+            sleeve.number = i;
+
+            sleeveData.push(sleeve);
+        }
+        sleeveData = JSON.stringify(sleeveData, null, 1);
+        ns.write(taskPath, sleeveData, "w");
+        return;
+    }
+
     if (args.save) {
         ns.tprint("Saving sleeve tasks to " + taskPath + "...");
-
-        let numSleeves = ns.sleeve.getNumSleeves();
-        let sleeveData = [];
 
         for (let i = 0; i < numSleeves; i++) {
             let sleeve = ns.sleeve.getTask(i);
