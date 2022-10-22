@@ -1,26 +1,43 @@
-// Scans the network and gets the names of all servers that you can hack
+// Scans the network and gets the names of all servers that you can hack and server info and writes the data to file
+
+import { getNumOwnedPortPrograms } from "lib/utils";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
+    const pServPrefix = "golem";
+    const hackFilePath = "/serverinfo/can_hack.txt";
+    const serversFilePath = "/data/server_info.txt";
     let hosts = scanNetwork();
     let canHack = [];
-    let pServPrefix = "golem";
+    let serverInfo = [];
     let homeSvr = "home";
     let printString = "Can hack ";
-    let noMoneySwitch = "-m";
-    // There are probably more. TODO: update this list
-    let noMoney = ["CSEC", "darkweb", "avmnite-02h", "I.I.I.I", "run4theh111z", ".", "The-Cave", "w0r1d_d43m0n"];
 
-    for (let i = 0; i < hosts.length; i++) {
-        // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
-        if (hosts[i] != homeSvr && !hosts[i].includes(pServPrefix) && ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(hosts[i]) && getNumPortPrograms() >= ns.getServerNumPortsRequired(hosts[i])) {
-            canHack.push(hosts[i]);
-        }
+    let args = ns.flags([["help", false], ["m", false]]);
+    if (args.help) {
+        ns.tprintf("Scans the network and gets the names of all servers that you can hack and server info and writes the data to file.");
+        ns.tprintf("Files will be written to " + hackFilePath + " and " + serversFilePath + ".");
+        ns.tprintf("Optional argument -m to filter servers that have no money from the list of servers you can hack.");
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.tprintf("Example:");
+        ns.tprintf(`> run ${ns.getScriptName()} -m`);
+        return;
     }
 
-    if (ns.args.includes(noMoneySwitch)) {
-        canHack = canHack.filter(host => !noMoney.includes(host));
+    for (let i = 0; i < hosts.length; i++) {
+        serverInfo.push(ns.getServer(hosts[i]));
+
+        // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
+        if (hosts[i] != homeSvr &&
+            !hosts[i].includes(pServPrefix) &&
+            ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(hosts[i]) &&
+            getNumOwnedPortPrograms(ns) >= ns.getServerNumPortsRequired(hosts[i]) &&
+            !(args.m && serverInfo[i].moneyMax === 0)) { // Don't add to can hack if the server has no max money
+
+            canHack.push(hosts[i]);
+        }
+
     }
 
     printString = printString.concat(canHack.length + " servers:\n")
@@ -33,14 +50,17 @@ export async function main(ns) {
         }
     }
 
-    canHack = JSON.stringify(canHack, null, 1); // Variable must be a string to write to a file
+    // Variable must be a string to write to a file
+    canHack = JSON.stringify(canHack, null, 1);
+    serverInfo = JSON.stringify(serverInfo, null, 1);
 
-    ns.tprint("Writing to '/serverinfo/can_hack.txt'...");
-    await ns.write("/serverinfo/can_hack.txt", canHack, "w");
+    ns.tprint("Writing to " + hackFilePath + "...");
+    ns.write(hackFilePath, canHack, "w");
+
+    ns.tprint("Writing to " + serversFilePath + "...");
+    ns.write(serversFilePath, serverInfo, "w");
 
     ns.tprint(printString);
-
-    return canHack;
 
     // Returns the hostnames of every host on the network
     function scanNetwork() {
@@ -49,20 +69,6 @@ export async function main(ns) {
             hostnames.push(...ns.scan(hostnames[i]).filter(hostname => !hostnames.includes(hostname)));
         }
         return hostnames;
-    }
-
-    // Returns the number of port programs the player owns
-    function getNumPortPrograms() {
-        let portPrograms = ["BruteSSH.exe", "FTPCrack.exe", "relaySMTP.exe", "HTTPWorm.exe", "SQLInject.exe"];
-        let count = 0;
-
-        for (let i = 0; i < portPrograms.length; i++) {
-            if (ns.fileExists(portPrograms[i], homeSvr)) {
-                count++;
-            }
-        }
-
-        return count;
     }
 
 }
