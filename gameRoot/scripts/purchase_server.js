@@ -1,3 +1,5 @@
+import { pServPrefix } from "lib/const";
+
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
 
@@ -15,7 +17,6 @@ export async function main(ns) {
 	let confirm = false;
 	let purchasedCount = 0;
 	let ram = -1;
-	const hostPrefix = "golem";
 	const pServLimit = ns.getPurchasedServerLimit();
 	const pServMaxRam = ns.getPurchasedServerMaxRam();
 
@@ -44,15 +45,15 @@ export async function main(ns) {
 					let purchasedServers = ns.getPurchasedServers();
 
 					for (let i = 0; i < serverCount; ++i) {
-						if (purchasedServers.includes(hostPrefix + i)) {
+						if (purchasedServers.includes(pServPrefix + i)) {
 							serverCount++;
 						} else {
 							if (serverCount <= pServLimit) {
-								let purchasedHost = ns.purchaseServer(hostPrefix + i, ram);
+								let purchasedHost = ns.purchaseServer(pServPrefix + i, ram);
 								if (!(purchasedHost == "")) {
 									purchasedCount++;
 								} else {
-									ns.print("ERROR Failed to purchase " + hostPrefix + i);
+									ns.print("ERROR Failed to purchase " + pServPrefix + i);
 								}
 							} else {
 								ns.tprint("Cannot purchase any more servers!");
