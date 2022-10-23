@@ -2,6 +2,9 @@ import { getThreads } from "lib/utils";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
+    let maxThreads = -1;
+    let fragments = [];
+
     const args = ns.flags([["help", false], ["max", false]]);
 
     if (args.help) {
@@ -19,11 +22,20 @@ export async function main(ns) {
         ns.tprint("Killing scripts...");
         ns.killall(ns.getHostname(), true);
 
-        ns.run(ns.getScriptName(), (getThreads(ns, ns.getServerMaxRam(ns.getHostname()), ns.getScriptRam(ns.getScriptName()))) - 1);
+        maxThreads = getThreads(ns, ns.getServerMaxRam(ns.getHostname()), ns.getScriptRam(ns.getScriptName()));
+        if (maxThreads !== 1) {
+            ns.run(ns.getScriptName(), (maxThreads - 1));
+        }
+
     }
 
     while (true) {{
-        let fragments = ns.stanek.activeFragments();
+        try {
+            fragments = ns.stanek.activeFragments();
+        } catch (error) {
+            ns.print("ERROR " + error);
+            return;
+        }
 
         for (let i = 0; i < fragments.length; i++) {
             if (fragments[i].limit === 99) {
@@ -33,7 +45,12 @@ export async function main(ns) {
             }
 
             if (!fragments[i].isBooster) {
-                await ns.stanek.chargeFragment(fragments[i].x, fragments[i].y);
+                try {
+                    await ns.stanek.chargeFragment(fragments[i].x, fragments[i].y);
+                } catch (error) {
+                    ns.print("ERROR " + error);
+                    return;
+                }
             }
         }
     }}
