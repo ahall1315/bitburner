@@ -24,6 +24,8 @@ export async function main(ns) {
         return;
     }
 
+    ns.disableLog("ALL");
+
     if (args.auto) {
         let servSlots = pServLimit - ns.getPurchasedServers().length;
         let fullyUpgraded = [];
@@ -67,6 +69,7 @@ export async function main(ns) {
                 if (ram === undefined) {
                     ns.print("Cannot upgrade " + target + " any more!");
                     fullyUpgraded.push(target);
+                    continue;
                 }
 
                 cost = ns.getPurchasedServerCost(ram);
@@ -102,6 +105,7 @@ export async function main(ns) {
                     }
                 }
             }
+            ns.print(buildPrintString());
             await ns.sleep(100);
         }
 
@@ -187,7 +191,22 @@ export async function main(ns) {
     }
 
     function buildPrintString() {
+        let pServs = ns.getPurchasedServers();
+        let printString = "____________________________________________________________\n";
+        pServs = pServs.sort((a, b) => {
+        a = a.replace(pServPrefix, "");
+        b = b.replace(pServPrefix, "");
 
+            return a - b;
+        });
+
+        for (let i = 0; i < pServs.length; i++) {
+            printString = printString.concat(
+`   ${pServs[i]} | Total RAM: ${formatRAM(ns, ns.getServerMaxRam(pServs[i]))} | Used RAM: ${formatRAM(ns, ns.getServerUsedRam(pServs[i]))} (${(ns.getServerUsedRam(pServs[i]) / ns.getServerMaxRam(pServs[i]) * 100).toFixed(2)}%)\n`
+);
+        }
+        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
+
+        return printString;
     }
-
 }
