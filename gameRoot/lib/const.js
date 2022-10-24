@@ -12,3 +12,5 @@ export const portPrograms = [
 export const gangKarmaRequirement = -54000;
 
 export const pServPrefix = "golem";
+
+export const gigaMultiplier = 1e9;

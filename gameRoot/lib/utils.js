@@ -43,3 +43,12 @@ export function getKarmaRatio(ns) {
 export function getThreads(ns, hostRam, scriptRam) {
     return Math.floor(hostRam / scriptRam);
 }
+
+/**
+ * Formats RAM
+ * 
+ * @returns Formatted RAM
+*/
+export function formatRAM(ns, n) {
+    return ns.nFormat(n * constants.gigaMultiplier, "0.00b");
+}
