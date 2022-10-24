@@ -10,10 +10,10 @@ export async function main(ns) {
 
     let serverInfo = JSON.parse(ns.read(serversFilePath));
 
+    ns.tprintf("These servers have coding contracts:");
     for (let i = 0; i < serverInfo.length; i++) {
-        ns.tprintf("These servers have coding contracts:");
         if (serverInfo[i].contracts.length !== 0) {
-            ns.tprintf(serverInfo[i].hostname);
+            ns.tprintf(serverInfo[i].hostname + ": " + [...serverInfo[i].contracts]);
         }
     }
 }
