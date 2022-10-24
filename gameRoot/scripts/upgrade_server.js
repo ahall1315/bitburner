@@ -192,7 +192,7 @@ export async function main(ns) {
 
     function buildPrintString() {
         let pServs = ns.getPurchasedServers();
-        let printString = "____________________________________________________________\n";
+        let printString = "________________________________________________________________\n";
         pServs = pServs.sort((a, b) => {
         a = a.replace(pServPrefix, "");
         b = b.replace(pServPrefix, "");
@@ -205,7 +205,7 @@ export async function main(ns) {
 `   ${pServs[i]} | Total RAM: ${formatRAM(ns, ns.getServerMaxRam(pServs[i]))} | Used RAM: ${formatRAM(ns, ns.getServerUsedRam(pServs[i]))} (${(ns.getServerUsedRam(pServs[i]) / ns.getServerMaxRam(pServs[i]) * 100).toFixed(2)}%)\n`
 );
         }
-        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
+        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
 
         return printString;
     }
