@@ -43,7 +43,7 @@ export async function main(ns) {
 
     for (let i = 0; i < toRun.length; i++) {
         try {
-            if (toRun[i].args === null) {
+            if (toRun[i].args === null || toRun[i].args === undefined) {
                 pid = ns.run(toRun[i].script);
             } else {
                 pid = ns.run(toRun[i].script, 1, ...toRun[i].args);
