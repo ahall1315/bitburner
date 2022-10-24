@@ -1,5 +1,6 @@
 import { pServPrefix } from "lib/const";
 import { getRandomInt } from "lib/utils";
+import { formatRAM } from "lib/utils";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
@@ -84,7 +85,7 @@ export async function main(ns) {
 
                 if (!error) {
                     if (ns.purchaseServer(target, ram) === "") {
-                        ns.print("ERROR Failed to upgrade " + target + " with " + ns.nFormat(ram, "0,0") + " GB");
+                        ns.print("ERROR Failed to upgrade " + target + " with " + formatRAM(ns, ram));
                         error = true;
                     } else {
                         // Copy files from home to the upgraded server
@@ -149,7 +150,7 @@ export async function main(ns) {
 
     if (!error) {
         if (ns.purchaseServer(target, ram) === "") {
-            ns.print("ERROR Failed to upgrade " + target + " with " + ns.nFormat(ram, "0,0") + " GB");
+            ns.print("ERROR Failed to upgrade " + target + " with " + formatRAM(ns, ram));
             error = true;
         } else {
             // Copy files from home to the upgraded server
@@ -167,8 +168,8 @@ export async function main(ns) {
     if (error) {
         ns.tprint("There was an error in running the script");
     } else {
-        ns.print("SUCCESS Upgraded " + target + " to " + ns.nFormat(ram, "0,0") + " GB for " + ns.nFormat(cost, "$0.000a"));
-        ns.tprint("Upgraded " + target + " to " + ns.nFormat(ram, "0,0") + " GB for " + ns.nFormat(cost, "$0.000a"));
+        ns.print("SUCCESS Upgraded " + target + " to " + formatRAM(ns, ram) + " of RAM for " + ns.nFormat(cost, "$0.000a"));
+        ns.tprint("Upgraded " + target + " to " + formatRAM(ns, ram) + " of RAM for " + ns.nFormat(cost, "$0.000a"));
     }
 
     function getRamOptions(maxRam) {
@@ -183,6 +184,10 @@ export async function main(ns) {
 
     function isPowerofTwo(x) {
         return ((x != 0) && !(x & (x - 1)));
+    }
+
+    function buildPrintString() {
+
     }
 
 }
