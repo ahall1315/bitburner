@@ -14,11 +14,12 @@ export async function main(ns) {
     let homeSvr = "home";
     let printString = "Can hack ";
 
-    let args = ns.flags([["help", false], ["m", false]]);
+    let args = ns.flags([["help", false], ["m", false], ["noPrint", false]]);
     if (args.help) {
         ns.tprintf("Scans the network and gets the names of all servers that you can hack and server info and writes the data to file.");
         ns.tprintf("Files will be written to " + hackFilePath + " and " + serversFilePath + ".");
         ns.tprintf("Optional argument -m to filter servers that have no money from the list of servers you can hack.");
+        ns.tprintf("Optional argument -noPrint to stop the script from printing to the terminal.");
         ns.tprintf(`Usage: run ${ns.getScriptName()}`);
         ns.tprintf("Example:");
         ns.tprintf(`> run ${ns.getScriptName()} -m`);
@@ -27,6 +28,9 @@ export async function main(ns) {
 
     for (let i = 0; i < hosts.length; i++) {
         serverInfo.push(ns.getServer(hosts[i]));
+
+        // Add coding contracts to server info
+        serverInfo[i].contracts.push(...ns.ls(hosts[i], ".cct"))
 
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
         if (hosts[i] != homeSvr &&
@@ -54,13 +58,19 @@ export async function main(ns) {
     canHack = JSON.stringify(canHack, null, 1);
     serverInfo = JSON.stringify(serverInfo, null, 1);
 
-    ns.tprint("Writing to " + hackFilePath + "...");
+    if (!args.noPrint) {
+        ns.tprint("Writing to " + hackFilePath + "...");
+    }
     ns.write(hackFilePath, canHack, "w");
 
-    ns.tprint("Writing to " + serversFilePath + "...");
+    if (!args.noPrint) {
+        ns.tprint("Writing to " + serversFilePath + "...");
+    }
     ns.write(serversFilePath, serverInfo, "w");
 
-    ns.tprint(printString);
+    if (!args.noPrint) {
+        ns.tprint(printString);
+    }
 
     // Returns the hostnames of every host on the network
     function scanNetwork() {
