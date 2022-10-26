@@ -15,6 +15,7 @@ export async function main(ns) {
         ns.tprint(`Usage: run ${ns.getScriptName()}`);
         ns.tprint("Example:");
         ns.tprint(`> run ${ns.getScriptName()}`);
+        return;
     }
 
     if (numSleeves === 0) {
@@ -35,12 +36,13 @@ export async function main(ns) {
 
         sleeveAugs = sleeveAugs.concat(purchaseableAugs);
         
-        for (let i = 0; i < sleeveAugs.length; i++) {
-            if ((playerMoney - totalCost) > sleeveAugs[i].cost) {
-                totalCost += sleeveAugs[i].cost;
-                sleeveAugs[i].canPurchase = true;
-                augCount++;
-            }
+    }
+
+    for (let i = 0; i < sleeveAugs.length; i++) {
+        if ((playerMoney - totalCost) > sleeveAugs[i].cost) {
+            totalCost += sleeveAugs[i].cost;
+            sleeveAugs[i].canPurchase = true;
+            augCount++;
         }
     }
 
@@ -60,10 +62,12 @@ export async function main(ns) {
                 }
             }
         }
-    }    
+    } else {
+        return;
+    }
     if (augCount > 0) {
         ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for " + ns.nFormat(totalCost, "$0.000a"));
     } else {
-        ns.tprint("Cannot purchase any more augmentatiions!");
+        ns.tprint("Cannot purchase any more augmentations!");
     }
 }
