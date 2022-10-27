@@ -62,9 +62,8 @@ export async function main(ns) {
                 }
             }
         }
-    } else {
-        return;
     }
+    
     if (augCount > 0) {
         ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for " + ns.nFormat(totalCost, "$0.000a"));
     } else {
