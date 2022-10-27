@@ -6,10 +6,10 @@ import { getKarmaRatio } from "lib/utils.js";
 export async function main(ns) {
     const args = ns.flags([["help", false]]);
     if (args.help) {
-        ns.tprint("This script will enhance your HUD (Heads up Display) with custom statistics.");
-        ns.tprint(`Usage: run ${ns.getScriptName()}`);
-        ns.tprint("Example:");
-        ns.tprint(`> run ${ns.getScriptName()}`);
+        ns.tprintf("This script will enhance your HUD (Heads up Display) with custom statistics.");
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.tprintf("Example:");
+        ns.tprintf(`> run ${ns.getScriptName()}`);
         return;
     }
 
