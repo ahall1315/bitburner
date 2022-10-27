@@ -12,8 +12,20 @@ export async function main(ns) {
 
     ns.tprintf("These servers have coding contracts:");
     for (let i = 0; i < serverInfo.length; i++) {
+        let serverIndex = i;
+        let printString = "";
+        printString = printString.concat(serverInfo[serverIndex].hostname + ": ");
         if (serverInfo[i].contracts.length !== 0) {
-            ns.tprintf(serverInfo[i].hostname + ": " + [...serverInfo[i].contracts]);
+            for (let i = 0; i < serverInfo[serverIndex].contracts.length; i++) {
+                if (i != serverInfo[serverIndex].contracts.length - 1) {
+                    printString = printString.concat(serverInfo[serverIndex].contracts[i] +
+                        " (" + ns.codingcontract.getContractType(serverInfo[serverIndex].contracts[i], serverInfo[serverIndex].hostname) + "), ");
+                } else {
+                    printString = printString.concat(serverInfo[serverIndex].contracts[i] +
+                        " (" + ns.codingcontract.getContractType(serverInfo[serverIndex].contracts[i], serverInfo[serverIndex].hostname) + ")");
+                }
+            }
+            ns.tprintf(printString);
         }
     }
 }
