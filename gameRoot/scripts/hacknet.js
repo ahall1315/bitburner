@@ -8,7 +8,43 @@ export async function main(ns) {
     let playerMoney = -1;
     let cost = -1;
     const purchaseThresh = 10 / 100; // This value is a threshold between node cost and total money as a percentage
-    const maxNodes = ns.hacknet.maxNumNodes(); // This value should be infinity
+    const maxNodes = ns.hacknet.maxNumNodes(); // This value can be infinity
+
+    const args = ns.flags([["help", false], ["sell", false]]);
+    if (args.help) {
+        ns.tprintf("This script will run an automated hacknet manager which will automatically buy and upgrade hacknet nodes for you.");
+        ns.tprintf("Optional argument --sell to sell all of your hashes for money.");
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.tprintf("Example 1:");
+        ns.tprintf(`> run ${ns.getScriptName()}`);
+        ns.tprintf("Example 2:");
+        ns.tprintf(`> run ${ns.getScriptName()} --sell`);
+        return;
+    }
+
+    if (args.sell) {
+        const upgradeName = "Sell for Money";
+        const sellMoney = 1000000;
+        let upgradeCount = -1;
+
+        while (true) {
+            upgradeCount = Math.floor(ns.hacknet.numHashes() / ns.hacknet.hashCost(upgradeName))
+
+            try {
+                if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
+                    if (ns.hacknet.spendHashes(upgradeName, "", upgradeCount)) {
+                        ns.print("SUCCESS Successfully sold " + upgradeCount + " hashes for " + ns.nFormat(upgradeCount * sellMoney, "$0.000a"));
+                    } else {
+                        ns.print("ERROR Failed to sell " + upgradeCount + " hashes for " + ns.nFormat(upgradeCount * sellMoney, "$0.000a"));
+                    }
+                }
+            } catch (error) {
+                ns.print(error);
+                return;
+            }
+            await ns.sleep(10000) // Wait ten seconds
+        }
+    }
 
     ns.tprint("Beginning automated hacknet manager...");
 
@@ -25,18 +61,20 @@ export async function main(ns) {
         playerMoney = ns.getPlayer().money;
 
         // Purchasing a node
-        cost = ns.hacknet.getPurchaseNodeCost();
-        if (cost < (playerMoney * purchaseThresh)) {
-            targetNode = ns.hacknet.purchaseNode();
-            if (targetNode === -1) {
-                error = true;
-            }
+        if (numNodes < maxNodes) {
+            cost = ns.hacknet.getPurchaseNodeCost();
+            if (cost < (playerMoney * purchaseThresh)) {
+                targetNode = ns.hacknet.purchaseNode();
+                if (targetNode === -1) {
+                    error = true;
+                }
 
-            if (error) {
-                ns.print("There was an error in purchasing a hacknet node.");
-                error = false; // Reset error flag
-            } else {
-                ns.print("Successfully purchased a hacknet node with index: " + targetNode);
+                if (error) {
+                    ns.print("There was an error in purchasing a hacknet node.");
+                    error = false; // Reset error flag
+                } else {
+                    ns.print("Successfully purchased a hacknet node with index: " + targetNode);
+                }
             }
         }
 
