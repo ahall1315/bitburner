@@ -62,11 +62,11 @@ export async function main(ns) {
                 }
             }
         }
+        if (augCount > 0) {
+            ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for " + ns.nFormat(totalCost, "$0.000a"));
+        } else {
+            ns.tprint("Cannot purchase any more augmentations!");
+        }
     }
     
-    if (augCount > 0) {
-        ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for " + ns.nFormat(totalCost, "$0.000a"));
-    } else {
-        ns.tprint("Cannot purchase any more augmentations!");
-    }
 }
