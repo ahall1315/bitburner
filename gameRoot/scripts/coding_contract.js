@@ -3,6 +3,15 @@ export async function main(ns) {
     const crawlerScript = "/scripts/crawler.js";
     const serversFilePath = "/data/server_info.txt";
 
+    const args = ns.flags([["help", false]])
+    if (args.help) {
+        ns.tprintf("This script will print information about coding contracts on the network.");
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.tprintf("Example");
+        ns.tprintf(`> run ${ns.getScriptName()}`);
+        return;
+    }
+
     if (ns.run(crawlerScript, 1, "--noPrint") === 0) {
         ns.tprint("ERROR Failed to run " + crawlerScript + ". Does the file exist?");
     }
@@ -28,4 +37,17 @@ export async function main(ns) {
             ns.tprintf(printString);
         }
     }
+
+    //#region Find Largest Prime Factor
+    function factor(num) {
+        for (let div = 2; div <= Math.sqrt(num); div++) {
+          if (num % div != 0) {
+            continue;
+          }
+          num = num / div;
+          div = 1;
+        }
+        return num;
+    }
+    //#endregion
 }
