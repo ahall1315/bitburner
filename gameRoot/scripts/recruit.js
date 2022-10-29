@@ -24,6 +24,14 @@ export async function main(ns) {
             ns.tprint("Please provide a name for at least " + MAX_MEMBERS + " gang members in " + namesPath);
             ns.exit();
         }
+
+        // Allow for newline characters in the csv file
+        for (let i = 0; i < memberNames.length; i++) {
+            if (memberNames[i].includes("\r") || memberNames[i].includes("\n")) {
+                memberNames[i] = memberNames[i].replace("\r", "");
+                memberNames[i] = memberNames[i].replace("\n", "");
+            }
+        }
     } else {
         ns.tprint("File " + namesPath + " does not exist! Cannot run script.");
         ns.exit();
