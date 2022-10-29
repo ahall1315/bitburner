@@ -8,6 +8,7 @@ export async function main(ns) {
     let sleeveAugs = [];
     let augCount = 0;
     let confirm = false;
+    let noPurchase = ["Z.O.Ë."] // Z.O.Ë. is a special augmentation that can potentially make the stats of sleeves worse.
 
     const args = ns.flags([["help", false]]);
     if (args.help) {
@@ -32,8 +33,11 @@ export async function main(ns) {
                 purchaseableAugs[i] = {};
             }
             purchaseableAugs[i].sleeveNumber = sleeveNumber;
+            // Remove the augmentations that are in the no purchase list
+            if (noPurchase.includes(purchaseableAugs[i].name)) {
+                purchaseableAugs.splice(i, 1);
+            }
         }
-
         sleeveAugs = sleeveAugs.concat(purchaseableAugs);
         
     }
@@ -55,7 +59,8 @@ export async function main(ns) {
 
     if (confirm) {
         for (let i = 0; i < sleeveAugs.length; i++) {
-            if (sleeveAugs[i].canPurchase === true && ns.getServerMoneyAvailable("home") > sleeveAugs[i].cost) {
+            // If you can purchase the augmentation and the augmentations is not in the list of augmentations to not purchase
+            if (sleeveAugs[i].canPurchase === true && ns.getServerMoneyAvailable("home") > sleeveAugs[i].cost && noPurchase.indexOf(sleeveAugs[i].name) === -1) {
                 if (ns.sleeve.purchaseSleeveAug(sleeveAugs[i].sleeveNumber, sleeveAugs[i].name) === true) {
                     ns.print("SUCCESS Purchased " + sleeveAugs[i].name + " for sleeve " + sleeveAugs[i].sleeveNumber);
                     augCount++;
