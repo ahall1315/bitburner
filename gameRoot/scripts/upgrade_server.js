@@ -210,3 +210,9 @@ export async function main(ns) {
         return printString;
     }
 }
+
+export function autocomplete(data, args) {
+    return [...data.servers]; // This script autocompletes the list of servers.
+    return [...data.servers, ...data.scripts]; // Autocomplete servers and scripts
+    return ["low", "medium", "high"]; // Autocomplete 3 specific strings.
+}

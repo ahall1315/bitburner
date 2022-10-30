@@ -30,6 +30,14 @@ export async function main(ns) {
         {
             script: "/scripts/hack_all.js",
             args: ["--killHack"]
+        },
+        {
+            script: "/scripts/hacknet.js",
+            args: null
+        },
+        {
+            script: "/scripts/hacknet.js",
+            args: ["--sell"]
         }
     ]
 
