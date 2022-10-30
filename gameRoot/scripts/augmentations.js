@@ -38,6 +38,7 @@ export async function main(ns) {
 
     data = JSON.stringify(factions, null, 1);
     ns.tprint(data);
+    ns.tprint("Writing to " + augFile + "...");
     ns.write(augFile, data, "w");
 
 }
