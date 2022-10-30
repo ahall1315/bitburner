@@ -24,19 +24,20 @@ export async function main(ns) {
     // Get a reference to the React event handler.
     const handler = Object.keys(terminalInput)[1];
 
-    // If the takeover switch was provided
-    if (args.to) {
-        pid = ns.run("/scripts/takeover.js", 1, target);
-
-        if (pid <= 0) {
-            error = true;
-        }
-    }
-   
+    
 	let [results, isFound] = findPath(target, startServer, [], [], false);
 	if (!isFound) {
         ns.tprint("Server not found!");
 	} else {
+        // If the takeover switch was provided
+        if (args.to) {
+            pid = ns.run("/scripts/takeover.js", 1, target);
+    
+            if (pid <= 0) {
+                error = true;
+            }
+        }
+        
         for (let i = 0; i < results.length; i++) {
             terminalString = terminalString.concat("connect " + results[i] + ";");
         }
