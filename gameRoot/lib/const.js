@@ -13,6 +13,8 @@ export const gangKarmaRequirement = -54000;
 
 export const pServPrefix = "golem";
 
+export const hacknetPrefix = "hacknet-node-";
+
 export const gigaMultiplier = 1e9;
 
 export const factionNames = [
