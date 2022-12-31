@@ -50,5 +50,8 @@ export function getThreads(ns, hostRam, scriptRam) {
  * @returns Formatted RAM
 */
 export function formatRAM(ns, n) {
+    if (isNaN(n)) {
+        return "NaN";
+    }
     return ns.nFormat(n * constants.gigaMultiplier, "0.00b");
 }
