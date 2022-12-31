@@ -91,6 +91,11 @@ export async function main(ns) {
                     continue;
                 }
 
+                // If the highest RAM the player can afford is the current RAM of the target, do nothing
+                if (ram === ns.getServerMaxRam(target)) {
+                    continue;
+                }
+
                 ns.killall(target, true);
                 if (!ns.deleteServer(target)) {
                     ns.print("ERROR Failed to delete " + target + "!");
