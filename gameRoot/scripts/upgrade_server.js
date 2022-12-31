@@ -25,6 +25,8 @@ export async function main(ns) {
     }
 
     ns.disableLog("ALL");
+    ns.resizeTail(619, 732);
+    ns.moveTail(1040, -6);
 
     if (args.auto) {
         let servSlots = pServLimit - ns.getPurchasedServers().length;
@@ -48,11 +50,14 @@ export async function main(ns) {
             await ns.sleep(100);
         }
 
+        // While not all servers are fully upgraded
         while (fullyUpgraded.length != pServLimit) {
 
+            // For each purchased server
             for (let i = 0; i < pServLimit; i++) {
                 target = (pServPrefix + i);
 
+                // If the server is fully upgraded, skip it
                 if (fullyUpgraded.includes(target)) {
                     continue;
                 }
@@ -60,16 +65,22 @@ export async function main(ns) {
                 ram = ns.getServerMaxRam(target);
                 ramOptions = getRamOptions(pServMaxRam);
 
+                let count = 0;
+                // Get the max RAM for the current pServ that the player can buy
                 for (let i = 0; i < ramOptions.length; i++) {
                     if (ramOptions[i] === ram) {
                         ram = ramOptions[i + 1];
-                        break;
+                        count++;
+                        if (ram !== undefined) {
+                            cost = ns.getPurchasedServerCost(ram);
+                            if (cost > ns.getPlayer().money) {
+                                ram = ramOptions[i];
+                                break;
+                            }
+                        } else {
+                            ram = ramOptions[i];
+                        }
                     }
-                }
-                if (ram === undefined) {
-                    ns.print("Cannot upgrade " + target + " any more!");
-                    fullyUpgraded.push(target);
-                    continue;
                 }
 
                 cost = ns.getPurchasedServerCost(ram);
@@ -91,8 +102,14 @@ export async function main(ns) {
                         ns.print("ERROR Failed to upgrade " + target + " with " + formatRAM(ns, ram));
                         error = true;
                     } else {
+                        if (ram === pServMaxRam) {
+                            fullyUpgraded.push(target);
+                        }
+
                         // Copy files from home to the upgraded server
-                        ns.exec("/scripts/scp.js", "home", 1, "/", target);
+                        ns.exec("/scripts/scp.js", "home", 1, "/scripts/", target);
+                        ns.exec("/scripts/scp.js", "home", 1, "/lib/", target);
+                        ns.exec("/scripts/scp.js", "home", 1, "/control/", target);
                         await ns.sleep(500);// Wait for files to copy
 
                         // Charge fragments one tenth of the time
@@ -158,7 +175,9 @@ export async function main(ns) {
             error = true;
         } else {
             // Copy files from home to the upgraded server
-            ns.exec("/scripts/scp.js", "home", 1, "/", target);
+            ns.exec("/scripts/scp.js", "home", 1, "/scripts/", target);
+            ns.exec("/scripts/scp.js", "home", 1, "/lib/", target);
+            ns.exec("/scripts/scp.js", "home", 1, "/control/", target);
             await ns.sleep(500);// Wait for files to copy
 
             for (let i = 0; i < processInfo.length; i++) {
@@ -205,7 +224,7 @@ export async function main(ns) {
 `   ${pServs[i]} | Total RAM: ${formatRAM(ns, ns.getServerMaxRam(pServs[i]))} | Used RAM: ${formatRAM(ns, ns.getServerUsedRam(pServs[i]))} (${(ns.getServerUsedRam(pServs[i]) / ns.getServerMaxRam(pServs[i]) * 100).toFixed(2)}%)\n`
 );
         }
-        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
+        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
 
         return printString;
     }
