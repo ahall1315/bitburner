@@ -65,12 +65,10 @@ export async function main(ns) {
                 ram = ns.getServerMaxRam(target);
                 ramOptions = getRamOptions(pServMaxRam);
 
-                let count = 0;
                 // Get the max RAM for the current pServ that the player can buy
                 for (let i = 0; i < ramOptions.length; i++) {
                     if (ramOptions[i] === ram) {
                         ram = ramOptions[i + 1];
-                        count++;
                         if (ram !== undefined) {
                             cost = ns.getPurchasedServerCost(ram);
                             if (cost > ns.getPlayer().money) {
@@ -93,6 +91,12 @@ export async function main(ns) {
 
                 // If the highest RAM the player can afford is the current RAM of the target, do nothing
                 if (ram === ns.getServerMaxRam(target)) {
+                    // Get the next tier of ram the server can be upgraded to
+                    ram = ramOptions[ramOptions.indexOf(ram) + 1];
+                    cost = ns.getPurchasedServerCost(ram);
+
+                    ns.print("You don't have enough money to upgrade " + target + "!");
+                    ns.print("You need " + ns.nFormat(cost, "$0.000a"));
                     continue;
                 }
 
@@ -217,9 +221,10 @@ export async function main(ns) {
     function buildPrintString() {
         let pServs = ns.getPurchasedServers();
         let printString = "________________________________________________________________\n";
+        // Sorts purchased servers least to greatest
         pServs = pServs.sort((a, b) => {
-        a = a.replace(pServPrefix, "");
-        b = b.replace(pServPrefix, "");
+            a = a.replace(pServPrefix, "");
+            b = b.replace(pServPrefix, "");
 
             return a - b;
         });
