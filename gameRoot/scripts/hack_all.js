@@ -39,7 +39,7 @@ export async function main(ns) {
 
     if (!error) {
         threads = getMaxThreads(host);
-        ns.tprint("Total threads: " + threads);
+        ns.tprint("[" + host + "] Total threads: " + threads);
     
         canHack = ns.read(toHackPath);
         canHack = JSON.parse(canHack);
@@ -49,13 +49,13 @@ export async function main(ns) {
         }
     
         threads = divideThreads(threads, toHack);
-        ns.tprint("Threads per target: " + threads);
+        ns.tprint("[" + host + "] Threads per target: " + threads);
     
         await attemptHack(host, toHack, threads, noPrintSwitch);
     }
 
     if (error) {
-        ns.tprint("There was an error in running the script.");
+        ns.tprint("[" + host + "] There was an error in running the script.");
     }
 
     function getMaxThreads(host) {
@@ -86,10 +86,10 @@ export async function main(ns) {
     }
 
     async function attemptHack(host, targets, threads, noPrintSwitch) {
-        ns.tprint("Attempting to hack...");
+        ns.tprint("[" + host + "] Attempting to hack...");
 
         if (threads === 0) {
-            ns.tprint("Error: 0 threads while attempting to hack targets.")
+            ns.tprint("[" + host + "] Error: 0 threads while attempting to hack targets.")
             error = true;
         }
 
@@ -108,14 +108,14 @@ export async function main(ns) {
                 error = checkError(pid);
             }
             if (targets.length === 1) {
-                ns.tprint("Hacking server on " + host + "...")
+                ns.tprint("[" + host + "] Hacking server...")
             } else {
-                ns.tprint("Hacking multiple servers on " + host + "...");
+                ns.tprint("[" + host + "] Hacking multiple servers...");
             }
         }
 
         if (error) {
-            ns.tprint("There was an error in hacking one or more servers on " + host + ". Is there enough RAM?");
+            ns.tprint("[" + host + "] There was an error in hacking one or more servers. Is there enough RAM?");
         }
     }
 
