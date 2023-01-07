@@ -35,22 +35,24 @@ export async function main(ns) {
     // Populate can_hack.txt
     pid = ns.run("/scripts/crawler.js", 1, noMoneySwitch);
     await ns.sleep(1000); // Waits for can_hack.txt to be populated
-    error = checkError();
+    error = checkError(pid);
 
-    threads = getMaxThreads(host);
-    ns.tprint("Total threads: " + threads);
-
-    canHack = ns.read(toHackPath);
-    canHack = JSON.parse(canHack);
-
-    for (let i = 0; i < canHack.length; i++) {
-        toHack.push(canHack[i]);
+    if (!error) {
+        threads = getMaxThreads(host);
+        ns.tprint("Total threads: " + threads);
+    
+        canHack = ns.read(toHackPath);
+        canHack = JSON.parse(canHack);
+    
+        for (let i = 0; i < canHack.length; i++) {
+            toHack.push(canHack[i]);
+        }
+    
+        threads = divideThreads(threads, toHack);
+        ns.tprint("Threads per target: " + threads);
+    
+        await attemptHack(host, toHack, threads, noPrintSwitch);
     }
-
-    threads = divideThreads(threads, toHack);
-    ns.tprint("Threads per target: " + threads);
-
-    await attemptHack(host, toHack, threads, noPrintSwitch);
 
     if (error) {
         ns.tprint("There was an error in running the script.");
@@ -89,10 +91,9 @@ export async function main(ns) {
         if (threads === 0) {
             ns.tprint("Error: 0 threads while attempting to hack targets.")
             error = true;
-            ns.exit();
         }
 
-        if (targets.length === 0 || targets.includes("")) {
+        if (targets.length === 0 || targets.includes("") || error === true) {
             error = true;
         } else {
             for (let i = 0; i < targets.length; i++) {
@@ -107,14 +108,14 @@ export async function main(ns) {
                 error = checkError(pid);
             }
             if (targets.length === 1) {
-                ns.tprint("Hacking server...")
+                ns.tprint("Hacking server on " + host + "...")
             } else {
-                ns.tprint("Hacking multiple servers...");
+                ns.tprint("Hacking multiple servers on " + host + "...");
             }
         }
 
         if (error) {
-            ns.tprint("There was an error in hacking one or more servers. Is there enough RAM?");
+            ns.tprint("There was an error in hacking one or more servers on " + host + ". Is there enough RAM?");
         }
     }
 
