@@ -153,6 +153,8 @@ export async function main(ns) {
 
 		if (cantBuyCost > 0) {
 			ns.tprint("You need $" + ns.formatNumber(cantBuyCost) + " to buy the rest of the programs.");
+		} else {
+			ns.tprint("All programs purchased!");
 		}
 	}
 }
