@@ -34,7 +34,7 @@ export async function main(ns) {
 	// Acquire a reference to the terminal text field
 	const terminalInput = document.getElementById("terminal-input");
 
-	// Get's the player's current money
+	// Gets the player's current money
 	money = ns.getServerMoneyAvailable("home");
 
 	try {
