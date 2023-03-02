@@ -26,6 +26,7 @@ export async function main(ns) {
 		ns.tprint("Root access granted on " + target + ".");
 	}
 
+	pid = ns.run("/scripts/scp.js", 1, "/lib/", target);
 	pid = ns.run("/scripts/scp.js", 1, "/scripts/", target);
 	await ns.sleep(250);
 
