@@ -1,5 +1,5 @@
-import { pServPrefix } from "lib/const";
-import { formatRAM } from "lib/utils";
+import { pServPrefix } from "./lib/const.js";
+import { formatRAM } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
