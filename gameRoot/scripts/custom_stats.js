@@ -1,6 +1,6 @@
 // Original from: https://github.com/bitburner-official/bitburner-scripts/blob/master/custom-stats.js
 
-import { getKarmaRatio } from "lib/utils.js";
+import { getKarmaRatio } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

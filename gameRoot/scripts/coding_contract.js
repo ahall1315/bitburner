@@ -1,4 +1,4 @@
-import { formatRAM } from "lib/utils";
+import { formatRAM } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

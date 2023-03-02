@@ -1,6 +1,6 @@
-import { pServPrefix } from "lib/const";
-import { getRandomInt } from "lib/utils";
-import { formatRAM } from "lib/utils";
+import { pServPrefix } from "./lib/const.js";
+import { getRandomInt } from "./lib/utils.js";
+import { formatRAM } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

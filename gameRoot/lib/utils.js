@@ -1,6 +1,6 @@
 // Library for bitburner scripts. All exported functions must have ns as a parameter.
 
-import * as constants from "lib/const.js";
+import * as constants from "./lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

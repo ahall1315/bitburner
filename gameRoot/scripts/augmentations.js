@@ -1,7 +1,7 @@
 // Gets a list of unpurchased augmentations and writes it to a file
 // You must have access to singularity functions to use this script
 
-import { factionNames } from "lib/const";
+import { factionNames } from "./lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

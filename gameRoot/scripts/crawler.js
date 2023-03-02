@@ -1,6 +1,6 @@
 // Scans the network and gets the names of all servers that you can hack and server info and writes the data to file
 
-import { getNumOwnedPortPrograms } from "./lib/utils";
+import { getNumOwnedPortPrograms } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
