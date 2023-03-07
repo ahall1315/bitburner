@@ -50,6 +50,18 @@ export async function main(ns) {
             await ns.sleep(100);
         }
 
+        // Populate fully upgraded list
+        for (let i = 0; i < pServLimit; i++) {
+            target = (pServPrefix + i);
+
+            ram = ns.getServerMaxRam(target);
+
+            // Add the pServ to the fully upgraded list if it is at max ram and it is not already in the list
+            if (ram === pServMaxRam && !fullyUpgraded.includes(target)) {
+                fullyUpgraded.push(target);
+            }
+        }
+
         // While not all servers are fully upgraded
         while (fullyUpgraded.length != pServLimit) {
 
@@ -137,6 +149,8 @@ export async function main(ns) {
 
         if (error) {
             ns.tprint("There was an error in running the script");
+        } else {
+            ns.print("SUCCESS All servers successfully upgraded to max RAM!");
         }
 
         return;
