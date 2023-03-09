@@ -4,6 +4,6 @@ export async function main(ns) {
 
     while (true) {
         money += await ns.singularity.manualHack();
-        ns.print("Manual hack has made: " + ns.nFormat(money, "$0.000a"));
+        ns.print("Manual hack has made: " + ns.formatNumber(money));
     }
 }

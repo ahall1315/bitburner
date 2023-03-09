@@ -1,5 +1,3 @@
-import { formatRAM } from "./lib/utils.js";
-
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const crawlerScript = "/scripts/crawler.js";
@@ -20,7 +18,7 @@ export async function main(ns) {
 
     if ((ns.getServerMaxRam(ns.getHostname()) - ns.getServerUsedRam(ns.getHostname())) < ns.getScriptRam(crawlerScript)) {
         let totalRAM = ns.getScriptRam(ns.getScriptName()) + ns.getScriptRam(crawlerScript);
-        ns.tprint("ERROR Not enough RAM to run this script! You need at least " + formatRAM(ns, totalRAM) + " of RAM.");
+        ns.tprint("ERROR Not enough RAM to run this script! You need at least " + ns.formatRam(totalRAM) + " of RAM.");
         return;
     }
 

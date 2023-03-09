@@ -1,5 +1,4 @@
 import { pServPrefix } from "./lib/const.js";
-import { formatRAM } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
@@ -39,11 +38,11 @@ export async function main(ns) {
 		} else {
 			cost = serverCount * ns.getPurchasedServerCost(ram);
 
-			confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${formatRAM(ns, ram)} of RAM \nwill cost ${ns.nFormat(cost, "$0.000a")} \nConfirm?`, { type: "boolean" });
+			confirm = await ns.prompt(`Purchasing ${serverCount} server(s) \nwith ${ns.formatRam(ram)} of RAM \nwill cost $${ns.formatNumber(cost)} \nConfirm?`, { type: "boolean" });
 
 			if (confirm) {
 				if (cost > ns.getPlayer().money) {
-					ns.tprintf("You do not have enough money to purchase " + serverCount + " server(s) for " + ns.nFormat(cost, "$0.000a") + "!");
+					ns.tprintf("You do not have enough money to purchase " + serverCount + " server(s) for $" + ns.formatNumber(cost) + "!");
 				} else {
 
 					let purchasedServers = ns.getPurchasedServers();
@@ -66,7 +65,7 @@ export async function main(ns) {
 					}
 				}
 				if (purchasedCount != 0) {
-					ns.tprintf(`Successfully purchased ${purchasedCount} server(s) with ${formatRAM(ns, ram)} of RAM.`);
+					ns.tprintf(`Successfully purchased ${purchasedCount} server(s) with ${ns.formatRam(ram)} of RAM.`);
 
 					ns.tprintf(`
 Thank you for shopping with us!

@@ -33,9 +33,9 @@ export async function main(ns) {
             try {
                 if (ns.hacknet.numHashes() > ns.hacknet.hashCost(upgradeName)) {
                     if (ns.hacknet.spendHashes(upgradeName, "", upgradeCount)) {
-                        ns.print("SUCCESS Successfully sold " + upgradeCount + " hashes for " + ns.nFormat(upgradeCount * sellMoney, "$0.000a"));
+                        ns.print("SUCCESS Successfully sold " + upgradeCount + " hashes for $" + ns.formatNumber(upgradeCount * sellMoney));
                     } else {
-                        ns.print("ERROR Failed to sell " + upgradeCount + " hashes for " + ns.nFormat(upgradeCount * sellMoney, "$0.000a"));
+                        ns.print("ERROR Failed to sell " + upgradeCount + " hashes for $" + ns.formatNumber(upgradeCount * sellMoney));
                     }
                 }
             } catch (error) {

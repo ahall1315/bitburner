@@ -1,6 +1,5 @@
 import { pServPrefix } from "./lib/const.js";
 import { getRandomInt } from "./lib/utils.js";
-import { formatRAM } from "./lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
@@ -25,8 +24,8 @@ export async function main(ns) {
     }
 
     ns.disableLog("ALL");
-    ns.resizeTail(619, 732);
-    ns.moveTail(1040, -6);
+    ns.resizeTail(554, 732);
+    ns.moveTail(1147, -5);
 
     if (args.auto) {
         let servSlots = pServLimit - ns.getPurchasedServers().length;
@@ -44,7 +43,7 @@ export async function main(ns) {
                 }
             }
             if (cost > ns.getPlayer().money) {
-                ns.print("Not enough money to buy a server. You need " + ns.nFormat(cost, "$0.000a") + ". Waiting...");
+                ns.print("Not enough money to buy a server. You need $" + ns.formatNumber(cost) + ". Waiting...");
             }
             servSlots = pServLimit - ns.getPurchasedServers().length;
             await ns.sleep(100);
@@ -97,7 +96,7 @@ export async function main(ns) {
 
                 if (cost > ns.getPlayer().money) {
                     ns.print("You don't have enough money to upgrade " + target + "!");
-                    ns.print("You need " + ns.nFormat(cost, "$0.000a"));
+                    ns.print("You need $" + ns.formatNumber(cost));
                     continue;
                 }
 
@@ -108,7 +107,7 @@ export async function main(ns) {
                     cost = ns.getPurchasedServerCost(ram);
 
                     ns.print("You don't have enough money to upgrade " + target + "!");
-                    ns.print("You need " + ns.nFormat(cost, "$0.000a"));
+                    ns.print("You need $" + ns.formatNumber(cost));
                     continue;
                 }
 
@@ -120,7 +119,7 @@ export async function main(ns) {
 
                 if (!error) {
                     if (ns.purchaseServer(target, ram) === "") {
-                        ns.print("ERROR Failed to upgrade " + target + " with " + formatRAM(ns, ram));
+                        ns.print("ERROR Failed to upgrade " + target + " with " + ns.formatRam(ram));
                         error = true;
                     } else {
                         if (ram === pServMaxRam) {
@@ -182,7 +181,7 @@ export async function main(ns) {
 
     if (cost > ns.getPlayer().money) {
         ns.tprint("You don't have enough money to upgrade " + target + "!");
-        ns.tprint("You need " + ns.nFormat(cost, "$0.000a"));
+        ns.tprint("You need $" + ns.formatNumber(cost));
         return;
     }
 
@@ -194,7 +193,7 @@ export async function main(ns) {
 
     if (!error) {
         if (ns.purchaseServer(target, ram) === "") {
-            ns.print("ERROR Failed to upgrade " + target + " with " + formatRAM(ns, ram));
+            ns.print("ERROR Failed to upgrade " + target + " with " + ns.formatRam(ram));
             error = true;
         } else {
             // Copy files from home to the upgraded server
@@ -214,8 +213,8 @@ export async function main(ns) {
     if (error) {
         ns.tprint("There was an error in running the script");
     } else {
-        ns.print("SUCCESS Upgraded " + target + " to " + formatRAM(ns, ram) + " of RAM for " + ns.nFormat(cost, "$0.000a"));
-        ns.tprint("Upgraded " + target + " to " + formatRAM(ns, ram) + " of RAM for " + ns.nFormat(cost, "$0.000a"));
+        ns.print("SUCCESS Upgraded " + target + " to " + ns.formatRam(ram) + " of RAM for $" + ns.formatNumber(cost));
+        ns.tprint("Upgraded " + target + " to " + ns.formatRam(ram) + " of RAM for $" + ns.formatNumber(cost));
     }
 
     function getRamOptions(maxRam) {
@@ -234,7 +233,7 @@ export async function main(ns) {
 
     function buildPrintString() {
         let pServs = ns.getPurchasedServers();
-        let printString = "________________________________________________________________\n";
+        let printString = "_________________________________________________________\n";
         // Sorts purchased servers least to greatest
         pServs = pServs.sort((a, b) => {
             a = a.replace(pServPrefix, "");
@@ -245,10 +244,10 @@ export async function main(ns) {
 
         for (let i = 0; i < pServs.length; i++) {
             printString = printString.concat(
-`   ${pServs[i]} | Total RAM: ${formatRAM(ns, ns.getServerMaxRam(pServs[i]))} | Used RAM: ${formatRAM(ns, ns.getServerUsedRam(pServs[i]))} (${(ns.getServerUsedRam(pServs[i]) / ns.getServerMaxRam(pServs[i]) * 100).toFixed(2)}%)\n`
+`   ${pServs[i]} | Total RAM: ${ns.formatRam(ns.getServerMaxRam(pServs[i]), 0)} | Used RAM: ${ns.formatRam(ns.getServerUsedRam(pServs[i]), 0)} (${(ns.getServerUsedRam(pServs[i]) / ns.getServerMaxRam(pServs[i]) * 100).toFixed(2)}%)\n`
 );
         }
-        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
+        printString = printString.concat("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
 
         return printString;
     }

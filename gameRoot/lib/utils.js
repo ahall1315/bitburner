@@ -32,7 +32,7 @@ export function getNumOwnedPortPrograms(ns) {
 export function getKarmaRatio(ns) {
     let karma = ns.heart.break();
 
-    return ((karma.toFixed(0) / constants.gangKarmaRequirement) * 100).toFixed(0);
+    return (karma.toFixed(0) / constants.gangKarmaRequirement);
 }
 
 /**
@@ -46,6 +46,9 @@ export function getThreads(ns, hostRam, scriptRam) {
 
 /**
  * Formats RAM
+ * 
+ * @deprecated
+ * Deprecated as of v2.2.2. Use ns.formatRAM.
  * 
  * @returns Formatted RAM
 */

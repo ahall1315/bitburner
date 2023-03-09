@@ -51,7 +51,7 @@ export async function main(ns) {
     }
 
     if (augCount > 0) {
-        confirm = await ns.prompt("Buying " + augCount + " augmentations for " + numSleeves + " sleeves will cost " + ns.nFormat(totalCost, "$0.000a") + "\nConfirm?");
+        confirm = await ns.prompt("Buying " + augCount + " augmentations for " + numSleeves + " sleeves will cost $" + ns.formatNumber(totalCost) + "\nConfirm?");
     } else {
         ns.tprint("Cannot purchase any more augmentations!");
     }
@@ -70,7 +70,7 @@ export async function main(ns) {
             }
         }
         if (augCount > 0) {
-            ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for " + ns.nFormat(totalCost, "$0.000a"));
+            ns.tprint("Successfully purchased " + augCount + " augmentations for your sleeves for $" + ns.formatNumber(totalCost));
         } else {
             ns.tprint("Failed to purchase any augmentations!");
         }

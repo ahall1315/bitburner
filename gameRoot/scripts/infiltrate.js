@@ -95,9 +95,9 @@ export async function main(ns) {
             ns.tprintf("          Starting security level: " + infiltrations[i].location.infiltrationData.startingSecurityLevel.toFixed(2));
     
             ns.tprintf("      Rewards");
-            ns.tprintf("          Cash for selling: " + ns.nFormat(infiltrations[i].reward.sellCash, "$0.000a"));
-            ns.tprintf("          Reputation for trading: " + ns.nFormat(infiltrations[i].reward.tradeRep, "0.000a"));
-            ns.tprintf("          SoA Reputation: " + ns.nFormat(infiltrations[i].reward.SoARep, "0.000a"));
+            ns.tprintf("          Cash for selling: $" + ns.formatNumber(infiltrations[i].reward.sellCash));
+            ns.tprintf("          Reputation for trading: " + ns.formatNumber(infiltrations[i].reward.tradeRep));
+            ns.tprintf("          SoA Reputation: " + ns.formatNumber(infiltrations[i].reward.SoARep, "0.000a"));
     
             ns.tprintf("\n");
         }
