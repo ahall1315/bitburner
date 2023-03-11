@@ -26,7 +26,7 @@ export async function main(ns) {
             let karmaRatio = getKarmaRatio(ns);
             // Add player's current karma
             headers.push("Karma");
-            if (karmaRatio < 100) {
+            if (karmaRatio < 1) {
                 values.push(ns.formatNumber(ns.heart.break().toFixed(0), 3, 1000, true) + ` (${ns.formatPercent(karmaRatio, 2)})`);
             } else {
                 values.push(ns.formatNumber(ns.heart.break().toFixed(0), 3, 1000, true) + ` (> 100%)`);
