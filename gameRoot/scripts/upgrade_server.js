@@ -1,5 +1,5 @@
-import { pServPrefix } from "./lib/const.js";
-import { getRandomInt } from "./lib/utils.js";
+import { pServPrefix } from "/lib/const.js";
+import { getRandomInt } from "/lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

@@ -1,4 +1,4 @@
-import { getThreads } from "./lib/utils";
+import { getThreads } from "/lib/utils";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

@@ -1,7 +1,7 @@
 // Executes a script on the purchased servers that takes no argument
 
-import { pServPrefix } from "./lib/const.js";
-import { hacknetPrefix } from "./lib/const.js";
+import { pServPrefix } from "/lib/const.js";
+import { hacknetPrefix } from "/lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

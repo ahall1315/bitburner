@@ -1,7 +1,7 @@
 // Prints the player's karma to the terminal (Requirement to start gang: -54,000)
 // Karma persists between soft resets
 
-import { gangKarmaRequirement } from "./lib/const.js";
+import { gangKarmaRequirement } from "/lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {

@@ -1,4 +1,4 @@
-import { pServPrefix } from "./lib/const.js";
+import { pServPrefix } from "/lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
