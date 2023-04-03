@@ -9,6 +9,8 @@ export const portPrograms = [
     "SQLInject.exe"
 ]
 
+export const MAX_MEMBERS = 12;
+
 export const gangKarmaRequirement = -54000;
 
 export const pServPrefix = "golem";

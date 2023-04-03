@@ -1,4 +1,5 @@
 import { getRandomInt } from "/lib/utils.js";
+import { MAX_MEMBERS } from "/lib/const.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
@@ -15,8 +16,7 @@ export async function main(ns) {
     let currentMembers = [];
     let gangInfo = null;
     let rand = -1; // Random number
-    const MAX_MEMBERS = 12;
-
+    
     if (!ns.gang.inGang()) {
         ns.tprint("INFO You are not in a gang! You must join one before you can recruit.");
     }
