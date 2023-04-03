@@ -58,3 +58,20 @@ export function formatRAM(ns, n) {
     }
     return ns.nFormat(n * constants.gigaMultiplier, "0.00b");
 }
+
+/**
+ * Averages a given array of numbers
+ * 
+ * @returns The average of the given array of numbers
+ */
+export function getAverage(ns, array) {
+    if (!Array.isArray(array)) {
+        if (!isNaN(array)) {
+            return array;
+        }
+        return NaN;
+    }
+
+    let avg = array.reduce((p, c, _, a) => p + c / a.length, 0);
+    return avg;
+}
