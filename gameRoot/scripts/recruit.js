@@ -1,11 +1,16 @@
-// Recruits a gang member if they can be recruited
-
-import * as utils from "/lib/utils.js";
+import { getRandomInt } from "/lib/utils.js";
 
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
     const namesPath = "/data/gang_member_names.txt"; // Contents must be a comma seperated list
-    let inGang = false;
+
+    const args = ns.flags([["help", false]]);
+    if (args.help) {
+        ns.tprintf("This script will automatically recruit gang members and assign them to train combat if you are in a combat gang and train hacking if you are in a hacking gang.");
+        ns.tprintf("Gang members will be randomly assigned a name that is listed in " + namesPath + ". Contents of the file must be a csv.");
+        return;
+    }
+
     let memberNames = [];
     let currentMembers = [];
     let gangInfo = null;
@@ -42,7 +47,7 @@ export async function main(ns) {
             gangInfo = ns.gang.getGangInformation();
             currentMembers = ns.gang.getMemberNames();
 
-            rand = utils.getRandomInt(ns, 0, memberNames.length - 1);
+            rand = getRandomInt(ns, 0, memberNames.length - 1);
 
             // If the name is already in the gang, remove that name from the list of possible recruits
             if (currentMembers.includes(memberNames[rand])) {
