@@ -1,6 +1,6 @@
 /** @param {import("NetscriptDefinitions").NS} ns */
 export async function main(ns) {
-    const args = ns.flags([["help", false]]);
+    const args = ns.flags([["help", false], ["a", false]]);
     if (args.help || args._.length === 0) {
         ns.tprintf("Buys as much equipment as the player can afford for a gang member.");
         ns.tprintf("Optional argument -a to buy augmentations as well.");
@@ -18,7 +18,6 @@ export async function main(ns) {
     let toBuy = []; // List of equipment to buy
     let canBuy = []; // List of equipment you can buy
     const hackingAugmentations = ["BitWire", "Neuralstimulator", "DataJack"];
-    let augmentationSwitch = "-a";
 
     if (!ns.gang.inGang()) {
         ns.tprint("You are not in a gang! Cannot buy equipment for " + name);
@@ -47,7 +46,7 @@ export async function main(ns) {
         }
 
         // Remove augmentations unless augmentation switch is provided
-        if (!ns.args.includes(augmentationSwitch)) {
+        if (!args.a) {
             for (let i = 0; i < toBuy.length; i++) {
                 if (ns.gang.getEquipmentType(toBuy[i]) === "Augmentation") {
                     toBuy.splice(i, 1);
