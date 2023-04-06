@@ -11,7 +11,7 @@ export async function main(ns) {
     }
 
     const ASC_MULT_THRESH = 2; // Ascension multiplier threshold
-    const EQUIP_MEMBERS_PATH = "/scripts/equip_members.js";
+    const EQUIP_MEMBERS_PATH = "/scripts/equip_member.js";
     let currentMembers = [];
     let gangInfo = null;
 
@@ -47,20 +47,20 @@ export async function main(ns) {
             if (gangInfo.isHacking) {
                 if (currentMembers[i].ascensionResult.hack >= ASC_MULT_THRESH) {
                     if (ns.gang.ascendMember(currentMembers[i].name) === undefined) {
-                        ns.print("ERROR" + currentMembers[i].name + ": Failed to ascend gang member");
+                        ns.print("ERROR " + currentMembers[i].name + ": Failed to ascend gang member");
                     } else {
                         ns.print(currentMembers[i].name + ": Successfully ascended. They lost " + ns.formatNumber(currentMembers[i].ascensionResult.respect, 0) + " respect.");
                         if (args.train) {
                             if (currentMembers[i].task !== "Train Hacking") {
                                 if (!ns.gang.setMemberTask(currentMembers[i].name, "Train Hacking")) {
-                                    ns.print("ERROR" + currentMembers[i].name + ": Failed to assign to train hacking");
+                                    ns.print("ERROR " + currentMembers[i].name + ": Failed to assign to train hacking");
                                 } else {
                                     ns.print(currentMembers[i].name + ": Assigned to train hacking");
                                 }
                             }
                         }
-                        if (args.equip) {
-                            ns.run(EQUIP_MEMBERS_PATH, 1, currentMembers[i].name, "-a");
+                        if (ns.run(EQUIP_MEMBERS_PATH, 1, currentMembers[i].name, "-a") === 0) {
+                            ns.print("ERROR " + currentMembers[i].name + ": Failed to run " + EQUIP_MEMBERS_PATH);
                         }
                     }
                 } else {
@@ -78,20 +78,22 @@ export async function main(ns) {
                 ])
                 if (avg >= ASC_MULT_THRESH) {
                     if (ns.gang.ascendMember(currentMembers[i].name) === undefined) {
-                        ns.print("ERROR" + currentMembers[i].name + ": Failed to ascend gang member");
+                        ns.print("ERROR " + currentMembers[i].name + ": Failed to ascend gang member");
                     } else {
                         ns.print(currentMembers[i].name + ": Successfully ascended. They lost " + ns.formatNumber(currentMembers[i].ascensionResult.respect, 0) + " respect.");
                         if (args.train) {
                             if (currentMembers[i].task !== "Train Combat") {
                                 if (!ns.gang.setMemberTask(currentMembers[i].name, "Train Combat")) {
-                                    ns.print("ERROR" + currentMembers[i].name + ": Failed to assign to train combat");
+                                    ns.print("ERROR " + currentMembers[i].name + ": Failed to assign to train combat");
                                 } else {
                                     ns.print(currentMembers[i].name + ": Assigned to train combat");
                                 }
                             }
                         }
                         if (args.equip) {
-                            ns.run(EQUIP_MEMBERS_PATH, 1, currentMembers[i].name, "-a");
+                            if (ns.run(EQUIP_MEMBERS_PATH, 1, currentMembers[i].name, "-a") === 0) {
+                                ns.print("ERROR " + currentMembers[i].name + ": Failed to run " + EQUIP_MEMBERS_PATH);
+                            }
                         }
                     }
                 } else {
