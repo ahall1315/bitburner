@@ -1,7 +1,10 @@
+node_modules/
+dist/
 settings.json
 NetscriptDefinitions.d.ts
 data/
 test.js
+test.ts
 img.txt
 json.txt
 poke.txt
