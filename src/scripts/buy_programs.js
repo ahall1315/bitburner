@@ -1,6 +1,6 @@
 // Buys programs you have enough money for from darkweb
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
 	// BruteSSH.exe - $500.000k - Opens up SSH Ports.
 	// FTPCrack.exe - $1.500m - Opens up FTP Ports.

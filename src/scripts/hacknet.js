@@ -1,6 +1,6 @@
 // Runs automated hacknet manager
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     let error = false;
     let targetNode = -1;

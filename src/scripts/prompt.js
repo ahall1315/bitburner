@@ -1,6 +1,6 @@
 // Prompts the user for their name and welcomes them
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) { 
     let name = "";
 

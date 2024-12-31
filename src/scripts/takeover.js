@@ -1,6 +1,6 @@
 // Attempts to grant root access and distribute scripts to a provided server
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
 	let target = ns.args[0];
 	let pid = -1;

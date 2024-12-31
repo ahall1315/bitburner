@@ -1,6 +1,6 @@
 // Gets the path to a given host
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     let startServer = ns.getHostname();
 	let target = ns.args[0];

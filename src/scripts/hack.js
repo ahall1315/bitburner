@@ -1,4 +1,4 @@
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     var target = ns.args[0];
 

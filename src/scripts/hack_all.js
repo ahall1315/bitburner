@@ -1,6 +1,6 @@
 // Hacks all servers from home that you can hack with maximum threads
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
     const host = ns.getHostname();

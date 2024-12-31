@@ -3,7 +3,7 @@
 import { pServPrefix } from "/lib/const.js";
 import { hacknetPrefix } from "/lib/const.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
 	let script = ns.args[0];
 	let threads = ns.args[1];

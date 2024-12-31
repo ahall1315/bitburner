@@ -1,6 +1,6 @@
 import { getAverage } from "/lib/utils.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const args = ns.flags([["help", false], ["train", false], ["equip", false]]);
     if (args.help) {

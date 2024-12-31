@@ -1,7 +1,7 @@
 import { getRandomInt } from "/lib/utils.js";
 import { MAX_MEMBERS } from "/lib/const.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const namesPath = "/data/gang_member_names.txt"; // Contents must be a comma seperated list
 

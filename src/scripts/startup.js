@@ -1,6 +1,6 @@
 // Runs scripts to be used after installing augmentations
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     let pid = -1;
     let totalRAM = 0;

@@ -2,19 +2,19 @@
 
 import * as constants from "/lib/const.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     ns.tprint("This script functions as a library which stores utilities for other scripts.");
 }
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export function getRandomInt(ns, min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export function getNumOwnedPortPrograms(ns) {
     let count = 0;
 
@@ -27,7 +27,7 @@ export function getNumOwnedPortPrograms(ns) {
     return count;
 }
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 // Get the ratio between player's karma and the gang requirement as a percentage
 export function getKarmaRatio(ns) {
     let karma = ns.heart.break();

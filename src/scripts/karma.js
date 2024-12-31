@@ -3,7 +3,7 @@
 
 import { gangKarmaRequirement } from "/lib/const.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     let karma = ns.heart.break();
 

@@ -1,4 +1,4 @@
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const args = ns.flags([["help", false], ["a", false]]);
     if (args.help || args._.length === 0) {

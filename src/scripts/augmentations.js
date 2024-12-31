@@ -3,7 +3,7 @@
 
 import { factionNames } from "/lib/const.js";
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const augFile = "/data/unpurchased_augmentations.txt";
     let factions = [];

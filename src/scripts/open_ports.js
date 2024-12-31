@@ -2,7 +2,7 @@
 // Switch '-s' for scan
 // Swith '-n' for no terminal print
 
-/** @param {import("NetscriptDefinitions").NS} ns */
+/** @param {import("@ns").NS} ns **/
 export async function main(ns) {
 	let target = ns.args[0];
 	let error = false;
