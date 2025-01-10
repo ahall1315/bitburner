@@ -1,7 +1,7 @@
 /** @param {import("@ns").NS} ns **/
 export async function main(ns) {
     const args = ns.flags([["help", false]]);
-    if (args.help || args._.length !== 1) {
+    if (ns.args[0] === "help" || args._.length !== 1) {
         ns.tprintf("Hacks a server one time.");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [target]`);
         ns.tprintf("Example:");
