@@ -45,6 +45,27 @@ export function getThreads(ns, hostRam, scriptRam) {
 }
 
 /**
+ * Gets the free RAM of the target host
+ * 
+ * @returns the amount of RAM that is free on a given host
+*/
+/** @param {import("@ns").NS} ns **/
+export function getFreeRAM(ns, host) {
+    return (ns.getServerMaxRam(host) - ns.getServerUsedRam(host));
+}
+
+/**
+ * Gets the maximum amount of threads that can be used for a given host and script
+ * The amount of threads calculated is based on the free RAM of the host
+ * 
+ * @returns maximum threads for given host and script RAM
+*/
+/** @param {import("@ns").NS} ns **/
+export function getMaxThreads(ns, host, script) {
+    return Math.floor(getFreeRAM(ns, host) / ns.getScriptRam(script, host))
+}
+
+/**
  * Formats RAM
  * 
  * @deprecated
