@@ -30,6 +30,7 @@ export async function main(ns) {
         serverInfo.push(ns.getServer(hosts[i]));
 
         // Add coding contracts to server info
+        serverInfo[i].contracts = [];
         serverInfo[i].contracts.push(...ns.ls(hosts[i], ".cct"))
 
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
