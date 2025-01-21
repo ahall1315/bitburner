@@ -6,8 +6,6 @@ import { Server } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
 
-    const pServPrefix: string = "golem";
-    const hacknetServPrefix: string = "hacknet";
     const hackFilePath: string = "/data/can_hack.txt";
     const serversFilePath: string = "/data/server_info.txt";
     let hosts: string[] = scanNetwork();

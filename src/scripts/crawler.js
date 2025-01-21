@@ -5,7 +5,6 @@ import { getNumOwnedPortPrograms } from "/lib/utils.js";
 /** @param {import("@ns").NS} ns **/
 export async function main(ns) {
 
-    const pServPrefix = "golem";
     const hackFilePath = "/data/can_hack.txt";
     const serversFilePath = "/data/server_info.txt";
     let hosts = scanNetwork();
