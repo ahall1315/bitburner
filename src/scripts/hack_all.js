@@ -4,7 +4,7 @@
 export async function main(ns) {
     const hackScript = "/scripts/hack.js";
     const host = ns.getHostname();
-    const toHackPath = "/serverinfo/can_hack.txt";
+    const toHackPath = "/data/can_hack.txt";
     const noPrintSwitch = "-n";
     const noMoneySwitch = "-m";
 
