@@ -34,13 +34,13 @@ export async function main(ns) {
         serverInfo[i].contracts.push(...ns.ls(hosts[i], ".cct"))
 
         // Can hack if host is not home, not a purchased server, player has a high enough hacking level, and there are enough port programs on home
-        if (hosts[i] != homeSvr &&
-            !hosts[i].includes(pServPrefix) &&
-            ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(hosts[i]) &&
-            getNumOwnedPortPrograms(ns) >= ns.getServerNumPortsRequired(hosts[i]) &&
-            !(args.m && serverInfo[i].moneyMax === 0)) { // Don't add to can hack if the server has no max money
+        if (serverInfo[i].hostname != homeSvr &&
+            !serverInfo[i].purchasedByPlayer &&
+            ns.getHackingLevel() >= ns.getServerRequiredHackingLevel(serverInfo[i].hostname) &&
+            getNumOwnedPortPrograms(ns) >= ns.getServerNumPortsRequired(serverInfo[i].hostname) &&
+            !(args.m && serverInfo[i].moneyMax === 0)) { // Don't add to can hack if the max amount of money on the server is 0
 
-            canHack.push(hosts[i]);
+            canHack.push(serverInfo[i].hostname);
         }
 
     }
