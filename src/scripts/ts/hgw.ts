@@ -50,9 +50,9 @@ export async function main(ns: NS): Promise<void> {
             let datetime = (currentdate.getMonth() + 1) + "/"
                 + currentdate.getDate() + "/"
                 + currentdate.getFullYear() + " @ "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":"
-                + currentdate.getSeconds();
+                + currentdate.getHours().toString().padStart(2, "0") + ":"
+                + currentdate.getMinutes().toString().padStart(2, "0") + ":"
+                + currentdate.getSeconds().toString().padStart(2, "0");
 
             ns.print("---------------------------------------------------")
             ns.print("             HACKING TARGET: " + target);
