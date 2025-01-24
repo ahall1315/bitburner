@@ -1,25 +1,25 @@
 // Executes a script on the purchased servers that takes no argument
 
+import { NS, AutocompleteData } from "@ns";
 import { pServPrefix } from "/lib/const.js";
 import { hacknetPrefix } from "/lib/const.js";
 
-/** @param {import("@ns").NS} ns **/
-export async function main(ns) {
-	let script = ns.args[0];
-	let threads = ns.args[1];
-	let servers = [];
-	let scannedServers = [];
-	let error = false;
-	let pid = -1;
+export async function main(ns: NS): Promise<void> {
+	let script: string = <string>ns.args[0];
+	let threads: number = <number>ns.args[1];
+	let servers: string[] = [];
+	let scannedServers: string[] = [];
+	let error: boolean = false;
+	let pid: number = -1;
 
 	const args = ns.flags([["help", false], ["hacknet", false]]);
-    if (args.help) {
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("This script will attempt to execute a provided script that takes no args on the purchased servers.");
-		ns.tprint("Optional argument --hacknet to execute a script on the hacknet servers instead.");
+		ns.tprintf("Optional argument --hacknet to execute a script on the hacknet servers instead.");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [script] [threads]`);
         ns.tprintf("Example:");
         ns.tprintf(`> run ${ns.getScriptName()} hack.js 5`);
-        return;
+        ns.exit();
     }
 
 	ns.tprint("Attempting to run script " + script + " on " + servers.length + " servers...");
@@ -66,4 +66,8 @@ export async function main(ns) {
 	} else {
 		ns.tprint("Script successfully executed.");
 	}
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+	return [...data.servers, ...data.scripts, ...data.txts];
 }

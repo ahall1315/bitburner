@@ -1,20 +1,30 @@
 // Kills running scripts on all purchased servers
 
-/** @param {NS} ns */
-export async function main(ns) {
-	const hostPrefix = "golem";
-	let servers = ns.getPurchasedServers();
-	let error = false;
-	let killed = false;
-	let count = 0;
-	let targets = [];
+import { NS } from "@ns";
+import { pServPrefix } from "/lib/const";
+
+export async function main(ns: NS): Promise<void> {
+	let servers: string[] = ns.getPurchasedServers();
+	let error: boolean = false;
+	let killed: boolean = false;
+	let count: number = 0;
+	let targets: string[] = [];
+
+	if (ns.args[0] === "help") {
+		ns.tprintf("Kills all scripts on purchased servers. If no targets are provided, scripts on all purchased servers will be killed.");
+		ns.tprintf(`Usage: run ${ns.getScriptName()} [target1] [target2] ... [targetN]`);
+		ns.tprintf("Example:");
+		ns.tprintf(`> run ${ns.getScriptName()}`);
+		ns.tprintf(`> run ${ns.getScriptName()} ${pServPrefix}0 ${pServPrefix}1`);
+		ns.exit();
+	}
 	
 	// If there are no arguments
 	if (ns.args.length === 0) {
 		ns.tprint("Attempting to kill all scripts on purchased server(s)...");
 		
 		for (var i = 0; i < servers.length; ++i) {
-			killed = ns.killall(hostPrefix + i);
+			killed = ns.killall(pServPrefix + i);
 			if (!killed) {
 				error = true;
 			} else {
@@ -31,11 +41,11 @@ export async function main(ns) {
 		ns.tprint("Attempting to kill scripts on target(s)...");
 
 		for (i = 0; i < ns.args.length; i++) {
-			targets.push(ns.args[i]);
+			targets.push(String(ns.args[i]));
 		}
 
 		for (i = 0; i < targets.length; i++) {
-			killed = ns.killall(targets[i]);
+			killed = ns.killall(String(targets[i]));
 			if (!killed) {
 				error = true;
 			} else {
@@ -49,5 +59,4 @@ export async function main(ns) {
 		ns.tprint("Scripts successfully killed on " + count + " target(s).");
 
 	}
-	
 }
