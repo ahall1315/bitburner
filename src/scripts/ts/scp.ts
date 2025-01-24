@@ -8,7 +8,8 @@ export async function main(ns: NS): Promise<void> {
 	let target: string = <string>ns.args[1];
 	let copied: boolean = false;
 
-    if (ns.args[0] === "help") {
+	const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("Moves all script files in a source directory to a server");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [source directory] [destination hostname]`);
         ns.tprintf("Example:");

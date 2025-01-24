@@ -1,7 +1,8 @@
 import { NS, AutocompleteData } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("Performs hack, grow, and weaken on a target server until the script is terminated");
         ns.tprintf("There are assigned thresholds in the script that determine when to hack, grow, or weaken");
         ns.tprintf("Add optional flag --tail to see a log of the script");

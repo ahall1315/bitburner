@@ -1,7 +1,8 @@
 import { NS, AutocompleteData } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
-    if (ns.args[0] === "help" || ns.args.length !== 1) {
+    const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || ns.args.length !== 1 || args.help) {
         ns.tprintf("Weakens a server one time.");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [target]`);
         ns.tprintf("Example:");

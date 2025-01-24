@@ -10,7 +10,8 @@ export async function main(ns: NS): Promise<void> {
     let openPorts: number = 0;
     let toPrint: boolean = true;
 
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false], ["s", false], ["n", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("Attempts to open all ports and run NUKE.exe");
         ns.tprintf("Optional argument -s to scan nearby servers and attempt to open ports on them.");
         ns.tprintf("Optional argument -n")
@@ -19,8 +20,6 @@ export async function main(ns: NS): Promise<void> {
         ns.tprintf(`> run ${ns.getScriptName()} `);
         ns.exit();
     }
-
-    const args = ns.flags([["n", false], ["s", false]]);
 
     if (args.n) {
         toPrint = false;

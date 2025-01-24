@@ -3,7 +3,8 @@
 import { NS, AutocompleteData } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
-	if (ns.args[0] === "help") {
+	const args = ns.flags([["help", false]]);
+	if (ns.args[0] === "help" || args.help) {
 		ns.tprintf("Deletes the provided purchased server");
 		ns.tprintf(`Usage: run ${ns.getScriptName()} [target]`);
 		ns.tprintf("Example:");

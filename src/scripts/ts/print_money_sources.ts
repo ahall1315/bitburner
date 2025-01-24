@@ -1,6 +1,13 @@
 import { NS } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
+    const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || args.help) {
+        ns.tprintf("Formats and prints money sources");
+        ns.tprintf(`Usage: run ${ns.getScriptName()}`);
+        ns.exit();
+    }
+
     const formattedSources = formatMoneySources();
     ns.tprint(`Formatted Money Sources:\n${formattedSources}`);
 

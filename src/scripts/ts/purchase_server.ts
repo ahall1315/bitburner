@@ -3,7 +3,8 @@ import { pServPrefix } from "/lib/const.js";
 
 export async function main(ns: NS): Promise<void> {
 
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("This script will prompt the user with a menu to purchase servers.");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [Amount of servers]`);
         ns.tprintf("Example:");

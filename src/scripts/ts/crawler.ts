@@ -15,8 +15,8 @@ export async function main(ns: NS): Promise<void> {
     let homeSvr: string = "home";
     let printString: string = "Can hack ";
 
-    const args = ns.flags([["m", false], ["noPrint", false]]);
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false], ["m", false], ["noPrint", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("Scans the network and gets the names of all servers that you can hack and server info and writes the data to file");
         ns.tprintf("Files will be written to " + hackFilePath + " and " + serversFilePath + ".");
         ns.tprintf("Optional argument -m to filter servers that have no money from the list of servers you can hack.");

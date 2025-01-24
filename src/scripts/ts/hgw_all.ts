@@ -3,7 +3,8 @@
 import { NS } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false], ["killHack", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("This script will hack all servers (With the HGW script) you can hack with the maximum amount of threads. It will kill all running scripts and start the script /scripts/ts/hgw.js.");
         ns.tprintf("Optional argument '--killHack' to only kill the hacking scripts.");
         ns.tprintf(`Usage: run ${ns.getScriptName()}`);
@@ -24,9 +25,7 @@ export async function main(ns: NS): Promise<void> {
     let threads: number = 0;
     let error: boolean = false;
 
-    const args = ns.flags([["killHack", false]]);
-
-    if (args.killHack) {
+    if (args.killHack || ns.args[0] === "killHack") {
         ns.scriptKill(hackScript, host);
     } else {
         ns.killall(host, true);

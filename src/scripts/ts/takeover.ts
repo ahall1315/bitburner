@@ -10,7 +10,8 @@ export async function main(ns: NS): Promise<void> {
     let match: boolean = false;
     const substring: string = "scripts";
 
-    if (ns.args[0] === "help") {
+    const args = ns.flags([["help", false]]);
+    if (ns.args[0] === "help" || args.help) {
         ns.tprintf("Attempts to grant root access and distribute scripts to a provided server");
         ns.tprintf(`Usage: run ${ns.getScriptName()} [target]`);
         ns.tprintf("Example:");
