@@ -14,9 +14,14 @@ export async function main(ns: NS): Promise<void> {
 	let target = ns.args[0] as string | undefined; 
 
 	if (typeof target !== "string") {
-		ns.tprint("Incorrect usage of delete. Correct usage: delete [hostname]")
+		ns.tprintf("Incorrect usage of delete. Correct usage: delete [hostname]")
 	} else {
-		ns.deleteServer(target);
+		if(ns.deleteServer(target)) {
+			ns.tprintf(`Successfully deleted server ${target}`);
+		} else {
+			ns.tprintf(`Failed to delete server ${target}`);
+			ns.tprintf(`Does the server ${target} exist?`);
+		}
 	}
 }
 
