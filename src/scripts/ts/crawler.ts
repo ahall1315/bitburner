@@ -1,6 +1,6 @@
 // Scans the network and gets the names of all servers that you can hack and server info and writes the data to file
 
-import { NS } from "@ns";
+import { NS, AutocompleteData } from "@ns";
 import { getNumOwnedPortPrograms } from "/lib/utils.js";
 import { Server } from "@ns";
 
@@ -10,8 +10,7 @@ export async function main(ns: NS): Promise<void> {
     const serversFilePath: string = "/data/server_info.txt";
     let hosts: string[] = scanNetwork();
     let canHack: string[] = [];
-    // Extend the contracts property to the Server type
-    let serverInfo: (Server & { contracts: string[] })[] = [];
+    let serverInfo: (Server & { contracts: string[] })[] = []; // Extend the contracts property to the Server type
     let homeSvr: string = "home";
     let printString: string = "Can hack ";
 
@@ -80,4 +79,8 @@ export async function main(ns: NS): Promise<void> {
         }
         return hostnames;
     }
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+    return ["help", "--help", "m", "-m", "noPrint", "-noPrint"];
 }

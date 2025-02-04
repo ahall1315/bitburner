@@ -1,4 +1,4 @@
-import { NS } from "@ns";
+import { NS, AutocompleteData } from "@ns";
 import { pServPrefix } from "/lib/const.js";
 
 export async function main(ns: NS): Promise<void> {
@@ -101,4 +101,8 @@ Thank you for shopping with us!
         }
         return ramOptions;
     }
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+    return ["help", "--help"];
 }

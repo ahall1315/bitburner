@@ -1,6 +1,6 @@
 // Hacks all servers from home that you can hack with maximum threads
 
-import { NS } from "@ns";
+import { NS, AutocompleteData } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
     const args = ns.flags([["help", false], ["killHack", false]]);
@@ -119,4 +119,8 @@ export async function main(ns: NS): Promise<void> {
         }
     }
 
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+    return ["help", "--help", "killHack", "--killHack"];
 }

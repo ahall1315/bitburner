@@ -1,6 +1,6 @@
 // Kills running scripts on all purchased servers
 
-import { NS } from "@ns";
+import { NS, AutocompleteData } from "@ns";
 import { pServPrefix } from "/lib/const";
 
 export async function main(ns: NS): Promise<void> {
@@ -10,7 +10,8 @@ export async function main(ns: NS): Promise<void> {
 	let count: number = 0;
 	let targets: string[] = [];
 
-	if (ns.args[0] === "help") {
+	const args = ns.flags([["help", false]]);
+	if (ns.args[0] === "help" || args.help) {
 		ns.tprintf("Kills all scripts on purchased servers. If no targets are provided, scripts on all purchased servers will be killed.");
 		ns.tprintf(`Usage: run ${ns.getScriptName()} [target1] [target2] ... [targetN]`);
 		ns.tprintf("Example:");
@@ -59,4 +60,8 @@ export async function main(ns: NS): Promise<void> {
 		ns.tprint("Scripts successfully killed on " + count + " target(s).");
 
 	}
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+	return [...data.servers, "help", "--help"];
 }

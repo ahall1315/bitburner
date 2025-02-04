@@ -1,4 +1,4 @@
-import { NS } from "@ns";
+import { NS, AutocompleteData } from "@ns";
 
 export async function main(ns: NS): Promise<void> {
     const args = ns.flags([["help", false]]);
@@ -38,4 +38,8 @@ export async function main(ns: NS): Promise<void> {
         // Convert the formatted object to a readable JSON-like string
         return JSON.stringify(formatted, null, 2);
     }
+}
+
+export function autocomplete(data: AutocompleteData, args: string[]): string[] {
+    return ["help", "--help"];
 }

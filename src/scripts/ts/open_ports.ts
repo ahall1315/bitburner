@@ -166,5 +166,5 @@ export async function main(ns: NS): Promise<void> {
 }
 
 export function autocomplete(data: AutocompleteData, args: string[]): string[] {
-    return [...data.servers];
+    return [...data.servers, "help", "--help", "s", "-s", "n", "-n"];
 }

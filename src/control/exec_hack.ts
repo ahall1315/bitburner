@@ -43,5 +43,5 @@ export async function main(ns: NS): Promise<void> {
 }
 
 export function autocomplete(data: AutocompleteData, args: string[]): string[] {
-	return [...data.servers, ...data.scripts, ...data.txts];
+	return [...data.servers, ...data.scripts, ...data.txts, "help", "--help"];
 }
