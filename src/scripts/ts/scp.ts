@@ -22,7 +22,12 @@ export async function main(ns: NS): Promise<void> {
 	} else {
 		let files = ns.ls(hostname, sourceDirectory);
 		files.forEach(function (file, index) {
-			copied = ns.scp(file, target);
+			if (file.endsWith(".script") || file.endsWith(".js") || file.endsWith(".txt") || file.endsWith(".lit")) {
+				copied = ns.scp(file, target);
+			} else {
+				ns.print("WARN Cannot copy files that are not scripts, .lit, or .txt files");
+				ns.print("Attempted to copy file " + file + " from " + hostname + " to " + target);
+			}
 			if (copied) {
 				ns.print("Successfully copied " + file + " to " + target);
 			} else {
