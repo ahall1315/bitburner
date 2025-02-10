@@ -32,7 +32,7 @@ export function getNumOwnedPortPrograms(ns) {
 export function getKarmaRatio(ns) {
     let karma = ns.heart.break();
 
-    return (karma.toFixed(0) / constants.gangKarmaRequirement);
+    return (karma / constants.gangKarmaRequirement);
 }
 
 /**
@@ -73,6 +73,7 @@ export function getMaxThreads(ns, host, script) {
  * 
  * @returns Formatted RAM
 */
+/** @param {import("@ns").NS} ns **/
 export function formatRAM(ns, n) {
     if (isNaN(n)) {
         return "NaN";
@@ -85,6 +86,7 @@ export function formatRAM(ns, n) {
  * 
  * @returns The average of the given array of numbers
  */
+/** @param {import("@ns").NS} ns **/
 export function getAverage(ns, array) {
     if (!Array.isArray(array)) {
         if (!isNaN(array)) {
@@ -95,4 +97,16 @@ export function getAverage(ns, array) {
 
     let avg = array.reduce((p, c, _, a) => p + c / a.length, 0);
     return avg;
+}
+
+/**
+ * Takes a number and adds commas to it
+ * 
+ * @param x The number to add commas to
+ * 
+ * @returns A string with commas for every 3 digits
+ */
+/** @param {import("@ns").NS} ns **/
+export function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
